@@ -9,7 +9,7 @@ export const GuidePageModel = types
   .props({
     downloadUrl: "",
     path: "",
-    hast: "",
+    data: "",
     meta: types.array(types.string),
   })
   .actions(withSetPropAction)

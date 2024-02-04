@@ -13,11 +13,13 @@ export const GuideStoreModel = types
     pages: types.array(GuidePageModel),
     images: types.array(GuideImageModel),
     mapPaths: types.array(GuideMapPathModel),
+    loading: false,
   })
   .actions(withSetPropAction)
   .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions((store) => ({
     async fetchGuide() {
+      store.setProp("loading", true)
       // const response = await api.getEpisodes()
       // if (response.kind === "ok") {
       //   store.setProp("episodes", response.episodes)
@@ -27,6 +29,8 @@ export const GuideStoreModel = types
       store.setProp("pages", guide.guidePages)
       store.setProp("images", guide.guideImages)
       store.setProp("mapPaths", guide.guideMapPaths)
+
+      store.setProp("loading", false)
     },
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
 
@@ -41,7 +45,7 @@ const guide = {
     {
       "downloadUrl": "https://raw.githubusercontent.com/openguideapp/openguideapp-test-guide/main/guide1.md",
       "path": "guide1.md",
-      "hast": "<p>Hello World 2 !</p>\n<button path=\"home.md\">Back to Home!</button>",
+      "data": "<p>Hello World 2 !</p>\n<button path=\"home.md\">Back to Home!</button>",
       "meta": []
     },
     {

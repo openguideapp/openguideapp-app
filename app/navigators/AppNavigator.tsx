@@ -49,7 +49,8 @@ export type AppStackParamList = {
   GuideSearch: undefined
   Marketplace: undefined
   Settings: undefined
-  // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
+  GuideLoading: undefined
+	// IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
 }
 
 /**
@@ -99,7 +100,8 @@ const AppStack = observer(function AppStack() {
       <Stack.Screen name="GuideSearch" component={Screens.GuideSearchScreen} />
       <Stack.Screen name="Marketplace" component={Screens.MarketplaceScreen} />
       <Stack.Screen name="Settings" component={Screens.SettingsScreen} />
-      {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
+      <Stack.Screen name="GuideLoading" component={Screens.GuideLoadingScreen} />
+			{/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
     </Stack.Navigator>
   )
 })

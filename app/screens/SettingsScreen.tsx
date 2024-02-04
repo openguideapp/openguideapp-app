@@ -16,7 +16,7 @@ export const SettingsScreen: FC<SettingsScreenProps> = observer(function Setting
 
   function goNext() {
     // navigation.navigate("Demo", { screen: "DemoShowroom", params: {} })
-    // navigation.navigate("TabGuideHomeNavigator", { screen: "GuideHome"r })
+    // navigation.navigate("TabGuideHomeNavigator", { screen: "GuideHome" })
     navigation.replace("TabGuideHomeNavigator", { screen: "GuideHome" })
   }
 
