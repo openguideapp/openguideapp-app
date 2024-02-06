@@ -86,7 +86,7 @@ function App(props: AppProps) {
   // color set in native by rootView's background color.
   // In iOS: application:didFinishLaunchingWithOptions:
   // In Android: https://stackoverflow.com/a/45838109/204044
-  // You can replace with your own loading component if you wish.
+  // You can replace with your own loading component if you wish.marketplace
   if (!rehydrated || !isNavigationStateRestored || !areFontsLoaded) return null
 
   const linking = {

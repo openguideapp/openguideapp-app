@@ -24,7 +24,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
 
   function goNext() {
     // navigation.navigate("Demo", { screen: "DemoShowroom", params: {} })
-    navigation.replace("TabDefaultNavigator", { screen: "Settings" })
+    navigation.replace("TabNavigator", { screen: "Settings" })
   }
 
   useHeader(

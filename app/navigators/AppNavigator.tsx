@@ -20,8 +20,8 @@ import { useStores } from "../models"
 import { DemoTabParamList } from "./DemoNavigator"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { colors } from "app/theme"
-import { TabDefaultNavigator, TabDefaultNavigatorParamList } from "./TabDefaultNavigator"
-import { TabGuideHomeNavigatorParamList, TabGuideHomeNavigator } from "./TabGuideHomeNavigator"
+import { TabNavigator, TabNavigatorParamList } from "./TabNavigator"
+import { GuideTabNavigatorParamList, GuideTabNavigator } from "./GuideTabNavigator"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -40,17 +40,16 @@ export type AppStackParamList = {
   Welcome: undefined
   Login: undefined
   Demo: NavigatorScreenParams<DemoTabParamList>
-  TabGuideHomeNavigator: NavigatorScreenParams<TabGuideHomeNavigatorParamList>
-  TabDefaultNavigator: NavigatorScreenParams<TabDefaultNavigatorParamList>
+  GuideTabNavigator: NavigatorScreenParams<GuideTabNavigatorParamList>
+  TabNavigator: NavigatorScreenParams<TabNavigatorParamList>
   // 🔥 Your screens go here
   GuidePage: undefined
-  GuideHome: undefined
   GuideMap: undefined
   GuideSearch: undefined
-  Marketplace: undefined
+  Home: undefined
   Settings: undefined
   GuideLoading: undefined
-	// IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
+  // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
 }
 
 /**
@@ -76,7 +75,11 @@ const AppStack = observer(function AppStack() {
 
   return (
     <Stack.Navigator
-      screenOptions={{ headerShown: false, navigationBarColor: colors.background }}
+      screenOptions={{
+        headerShown: false,
+        navigationBarColor: colors.background,
+        animation: "slide_from_right",
+      }}
       initialRouteName={isAuthenticated ? "Welcome" : "Login"}
     >
       {isAuthenticated ? (
@@ -84,8 +87,8 @@ const AppStack = observer(function AppStack() {
           <Stack.Screen name="Welcome" component={Screens.WelcomeScreen} />
 
           {/* <Stack.Screen name="Demo" component={DemoNavigator} /> */}
-          <Stack.Screen name="TabDefaultNavigator" component={TabDefaultNavigator} />
-          <Stack.Screen name="TabGuideHomeNavigator" component={TabGuideHomeNavigator} />
+          <Stack.Screen name="TabNavigator" component={TabNavigator} />
+          <Stack.Screen name="GuideTabNavigator" component={GuideTabNavigator} />
         </>
       ) : (
         <>
@@ -94,14 +97,13 @@ const AppStack = observer(function AppStack() {
       )}
 
       {/** 🔥 Your screens go here */}
-      <Stack.Screen name="GuidePage" component={Screens.GuidePageScreen} />
-      <Stack.Screen name="GuideHome" component={Screens.GuideHomeScreen} />
+      {/* <Stack.Screen name="GuidePage" component={Screens.GuidePageScreen} />
       <Stack.Screen name="GuideMap" component={Screens.GuideMapScreen} />
       <Stack.Screen name="GuideSearch" component={Screens.GuideSearchScreen} />
-      <Stack.Screen name="Marketplace" component={Screens.MarketplaceScreen} />
+      <Stack.Screen name="Home" component={Screens.HomeScreen} />
       <Stack.Screen name="Settings" component={Screens.SettingsScreen} />
-      <Stack.Screen name="GuideLoading" component={Screens.GuideLoadingScreen} />
-			{/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
+      <Stack.Screen name="GuideLoading" component={Screens.GuideLoadingScreen} /> */}
+      {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
     </Stack.Navigator>
   )
 })

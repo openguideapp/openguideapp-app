@@ -1,5 +1,5 @@
 import React from "react"
-import { MarketplaceScreen, SettingsScreen } from "app/screens"
+import { HomeScreen, SettingsScreen } from "app/screens"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { Icon } from "app/components"
 import { colors, spacing, typography } from "app/theme"
@@ -7,14 +7,14 @@ import { colors, spacing, typography } from "app/theme"
 import { ViewStyle, TextStyle } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
-export type TabDefaultNavigatorParamList = {
+export type TabNavigatorParamList = {
   Settings: undefined
-  Marketplace: undefined
+  Home: undefined
 }
 
-const Tab = createBottomTabNavigator<TabDefaultNavigatorParamList>()
+const Tab = createBottomTabNavigator<TabNavigatorParamList>()
 
-export const TabDefaultNavigator = () => {
+export const TabNavigator = () => {
   const { bottom } = useSafeAreaInsets()
 
   return (
@@ -41,8 +41,8 @@ export const TabDefaultNavigator = () => {
       />
 
       <Tab.Screen
-        name="Marketplace"
-        component={MarketplaceScreen}
+        name="Home"
+        component={HomeScreen}
         options={{
           // tabBarLabel: translate("demoNavigator.communityTab"),
           tabBarIcon: ({ focused }) => (

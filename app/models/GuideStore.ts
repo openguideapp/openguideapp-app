@@ -16,7 +16,34 @@ export const GuideStoreModel = types
     loading: false,
   })
   .actions(withSetPropAction)
-  .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
+  .views((self) => ({
+    get guideHomePage() {
+      const homePage = self.pages.find(page => page.path === "home.md")
+      if (homePage) {
+        return homePage
+      } else {
+        return {
+          path: "home.md",
+          html: "<h1>Home Page Not Found!</h1>",
+          meta: []
+        }
+      }
+    },
+    getGuidePage(path: string) {
+      console.log("getGuidePage", path)
+      console.log("self.pages", self.pages.toJSON())
+      const page = self.pages.find(page => page.path === path.toString())
+      if (page) {
+        return page
+      } else {
+        return {
+          path: path,
+          html: `<h1>${path} Not Found!</h1>`,
+          meta: []
+        }
+      }
+    }
+  })) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions((store) => ({
     async fetchGuide() {
       store.setProp("loading", true)
@@ -31,6 +58,7 @@ export const GuideStoreModel = types
       store.setProp("mapPaths", guide.guideMapPaths)
 
       store.setProp("loading", false)
+      console.log("hallo loaded guide")
     },
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
 
@@ -45,13 +73,13 @@ const guide = {
     {
       "downloadUrl": "https://raw.githubusercontent.com/openguideapp/openguideapp-test-guide/main/guide1.md",
       "path": "guide1.md",
-      "data": "<p>Hello World 2 !</p>\n<button path=\"home.md\">Back to Home!</button>",
+      "html": "<p>Hello World 2 !</p>\n<button path=\"home.md\">Back to Home!</button>",
       "meta": []
     },
     {
       "downloadUrl": "https://raw.githubusercontent.com/openguideapp/openguideapp-test-guide/main/home.md",
       "path": "home.md",
-      "hast": "<h1>Hello World!</h1>\n<button path=\"guide1.md\">To Guide 1!</button>",
+      "html": "<h1>Hello World!</h1>\n<button path=\"guide1.md\">To Guide 1!</button>",
       "meta": []
     }
   ],

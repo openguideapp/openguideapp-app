@@ -1,28 +1,26 @@
 import React from "react"
-import {
-  GuideHomeScreen,
-  GuidePageScreen,
-  GuideSearchScreen,
-  MarketplaceScreen,
-  SettingsScreen,
-} from "app/screens"
+import { GuidePageScreen, GuideSearchScreen, HomeScreen, SettingsScreen } from "app/screens"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { Icon } from "app/components"
 import { colors, spacing, typography } from "app/theme"
 import { translate } from "i18n-js"
 import { ViewStyle, TextStyle } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
+import {
+  GuidePageStackNavigator,
+  GuidePageStackNavigatorParamList,
+} from "./GuidePageStackNavigator"
+import { NavigatorScreenParams } from "@react-navigation/native"
 
-export type TabGuideHomeNavigatorParamList = {
+export type GuideTabNavigatorParamList = {
   Settings: undefined
-  Marketplace: undefined
-  GuideHome: undefined
-  GuidePage: undefined
+  Home: undefined
+  GuidePageStackNavigator: NavigatorScreenParams<GuidePageStackNavigatorParamList>
   GuideSearch: undefined
 }
-const Tab = createBottomTabNavigator<TabGuideHomeNavigatorParamList>()
+const Tab = createBottomTabNavigator<GuideTabNavigatorParamList>()
 
-export const TabGuideHomeNavigator = () => {
+export const GuideTabNavigator = () => {
   const { bottom } = useSafeAreaInsets()
 
   return (
@@ -49,8 +47,8 @@ export const TabGuideHomeNavigator = () => {
       />
 
       <Tab.Screen
-        name="Marketplace"
-        component={MarketplaceScreen}
+        name="Home"
+        component={HomeScreen}
         options={{
           // tabBarLabel: translate("demoNavigator.communityTab"),
           tabBarIcon: ({ focused }) => (
@@ -60,19 +58,8 @@ export const TabGuideHomeNavigator = () => {
       />
 
       <Tab.Screen
-        name="GuideHome"
-        component={GuideHomeScreen}
-        options={{
-          // tabBarLabel: translate("demoNavigator.communityTab"),
-          tabBarIcon: ({ focused }) => (
-            <Icon icon="community" color={focused ? colors.tint : undefined} size={30} />
-          ),
-        }}
-      />
-
-      <Tab.Screen
-        name="GuidePage"
-        component={GuidePageScreen}
+        name="GuidePageStackNavigator"
+        component={GuidePageStackNavigator}
         options={{
           // tabBarLabel: translate("demoNavigator.communityTab"),
           tabBarIcon: ({ focused }) => (
