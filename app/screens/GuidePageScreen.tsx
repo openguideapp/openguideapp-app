@@ -12,9 +12,9 @@ export const GuidePageScreen: FC<GuidePageScreenProps> = observer(function Guide
   // Pull in one of our MST stores
   const { guideStore } = useStores()
   const { navigation } = _props
+  console.log("GuidePageScreen _props", _props)
+  const { path } = _props?.route?.params
 
-  console.log(_props?.route?.params)
-  // const { path } = _props.route.params
   // if (!path) {
   //   return <Text text="No path provided" />
   // }
@@ -25,19 +25,11 @@ export const GuidePageScreen: FC<GuidePageScreenProps> = observer(function Guide
     navigation.push("GuidePage")
   }
 
-  // const page = guideStore.getGuidePage(path.path)
-  // Pull in navigation via hook
-  // const navigation = useNavigation()
+  const page = guideStore.getGuidePage(path)
   return (
     <Screen style={$root} preset="scroll">
       <Text text="guidePage" />
-      {/* <Renderer htmlSource={page.html} /> */}
-      <Button
-        testID="next-screen-button"
-        preset="reversed"
-        tx="welcomeScreen.letsGo"
-        onPress={goNext}
-      />
+      <Renderer htmlSource={page.html} />
     </Screen>
   )
 })

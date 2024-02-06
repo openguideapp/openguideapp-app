@@ -30,9 +30,11 @@ export const GuideStoreModel = types
       }
     },
     getGuidePage(path: string) {
+      console.log(" --- inside getGuidePage model store ---")
       console.log("getGuidePage", path)
       console.log("self.pages", self.pages.toJSON())
       const page = self.pages.find(page => page.path === path.toString())
+      console.log("page", page)
       if (page) {
         return page
       } else {

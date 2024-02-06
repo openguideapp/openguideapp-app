@@ -26,10 +26,17 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(_pro
       } catch (error) {
         setIsError(true)
       }
-      // navigation.replace("GuideTabNavigator", { screen: "GuidePage" })
-      navigation.replace("GuidePage")
-
       setIsLoading(false)
+
+      navigation.replace("GuideTabNavigator", {
+        screen: "GuidePageStackNavigator",
+        params: {
+          screen: "GuidePage",
+          params: {
+            path: "home.md",
+          },
+        },
+      })
     }
     if (guideUrl !== "") {
       fetchGuide()
