@@ -20,7 +20,7 @@ export const SettingsScreen: FC<SettingsScreenProps> = observer(function Setting
     navigation.replace("GuideTabNavigator", { screen: "GuidePage" })
   }
 
-  console.log(navigation.getState())
+  // console.log(navigation.getState())
 
   // Pull in navigation via hook
   // const navigation = useNavigation()

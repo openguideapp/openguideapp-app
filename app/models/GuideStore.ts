@@ -32,9 +32,9 @@ export const GuideStoreModel = types
     getGuidePage(path: string) {
       console.log(" --- inside getGuidePage model store ---")
       console.log("getGuidePage", path)
-      console.log("self.pages", self.pages.toJSON())
+      // console.log("self.pages", self.pages.toJSON())
       const page = self.pages.find(page => page.path === path.toString())
-      console.log("page", page)
+      // console.log("page", page)
       if (page) {
         return page
       } else {
@@ -81,7 +81,13 @@ const guide = {
     {
       "downloadUrl": "https://raw.githubusercontent.com/openguideapp/openguideapp-test-guide/main/home.md",
       "path": "home.md",
-      "html": "<h1>Hello World!</h1>\n<button path=\"guide1.md\">To Guide 1!</button>",
+      "html": "<h1>Hello World!</h1>\n<button path=\"guide1.md\">To Guide 1!</button>\n<button path=\"images.md\">To Images!</button>",
+      "meta": []
+    },
+    {
+      "downloadUrl": "https://raw.githubusercontent.com/openguideapp/openguideapp-test-guide/main/images.md",
+      "path": "images.md",
+      "html": "<button path=\"home.md\"></button>\n<h1>Images with remote Url</h1>\n<img src=\"https://images.unsplash.com/photo-1696461353431-32c529d4585d?ixlib=rb-4.0.3&#x26;ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDR8RnpvM3p1T0hONnd8fGVufDB8fHx8fA%3D%3D&#x26;auto=format&#x26;fit=crop&#x26;w=400&#x26;q=60\" alt=\"image\" title=\"Temple Title\">\n<div></div>",
       "meta": []
     }
   ],

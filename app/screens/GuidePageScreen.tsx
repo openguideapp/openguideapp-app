@@ -12,7 +12,7 @@ export const GuidePageScreen: FC<GuidePageScreenProps> = observer(function Guide
   // Pull in one of our MST stores
   const { guideStore } = useStores()
   const { navigation } = _props
-  console.log("GuidePageScreen _props", _props)
+  console.log("GuidePageScreen _props?.route?.params", _props?.route?.params)
   const { path } = _props?.route?.params
 
   // if (!path) {

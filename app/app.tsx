@@ -31,7 +31,7 @@ import Config from "./config"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { ViewStyle } from "react-native"
 import { TRenderEngineProvider, RenderHTMLConfigProvider } from "react-native-render-html"
-import { customHTMLElementModels, customRenderers } from "./renderer"
+import { customHTMLElementModels, customRenderers, renderersProps } from "./renderer"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
@@ -103,7 +103,7 @@ function App(props: AppProps) {
       <ErrorBoundary catchErrors={Config.catchErrors}>
         <GestureHandlerRootView style={$container}>
           <TRenderEngineProvider customHTMLElementModels={customHTMLElementModels}>
-            <RenderHTMLConfigProvider renderers={customRenderers}>
+            <RenderHTMLConfigProvider renderers={customRenderers} renderersProps={renderersProps}>
               <AppNavigator
                 linking={linking}
                 initialState={initialNavigationState}
