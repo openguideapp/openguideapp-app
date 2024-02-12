@@ -3,7 +3,7 @@ import { GuidePageScreen, GuideSearchScreen, HomeScreen, SettingsScreen } from "
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { Icon } from "app/components"
 import { colors, spacing, typography } from "app/theme"
-import { translate } from "i18n-js"
+import { translate } from "app/i18n"
 import { ViewStyle, TextStyle } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import {
@@ -40,7 +40,7 @@ export const GuideTabNavigator = () => {
         name="Settings"
         component={SettingsScreen}
         options={{
-          // tabBarLabel: translate("demoNavigator.componentsTab"),
+          tabBarLabel: translate("tabNavigator.settings"),
           tabBarIcon: ({ focused }) => (
             <Settings height={30} width={30} color={focused ? colors.tint : colors.text} />
           ),
@@ -51,7 +51,7 @@ export const GuideTabNavigator = () => {
         name="Home"
         component={HomeScreen}
         options={{
-          // tabBarLabel: translate("demoNavigator.communityTab"),
+          tabBarLabel: translate("tabNavigator.hom"),
           tabBarIcon: ({ focused }) => (
             <HomeSimple height={30} width={30} color={focused ? colors.tint : colors.text} />
           ),
@@ -62,7 +62,7 @@ export const GuideTabNavigator = () => {
         name="GuidePageStackNavigator"
         component={GuidePageStackNavigator}
         options={{
-          // tabBarLabel: translate("demoNavigator.communityTab"),
+          tabBarLabel: translate("tabNavigator.guidePage"),
           tabBarIcon: ({ focused }) => (
             <FaceId height={30} width={30} color={focused ? colors.tint : colors.text} />
           ),
@@ -73,7 +73,7 @@ export const GuideTabNavigator = () => {
         name="GuideSearch"
         component={GuideSearchScreen}
         options={{
-          // tabBarLabel: translate("demoNavigator.communityTab"),
+          tabBarLabel: translate("tabNavigator.guideSearch"),
           tabBarIcon: ({ focused }) => (
             <DocMagnifyingGlass
               height={30}
