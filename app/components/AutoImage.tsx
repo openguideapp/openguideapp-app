@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useState } from "react"
 import { Image, ImageProps, ImageURISource, Platform } from "react-native"
+import { FastImage } from "react-native-fast-image"
 
 // TODO: document new props
 export interface AutoImageProps extends ImageProps {
@@ -68,5 +69,5 @@ export function AutoImage(props: AutoImageProps) {
     [maxWidth, maxHeight],
   )
 
-  return <Image {...ImageProps} style={[{ width, height }, props.style]} />
+  return <FastImage {...ImageProps} style={[{ width, height }, props.style]} />
 }

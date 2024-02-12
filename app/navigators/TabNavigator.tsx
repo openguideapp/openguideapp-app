@@ -6,6 +6,7 @@ import { colors, spacing, typography } from "app/theme"
 // import { translate } from "i18n-js"
 import { ViewStyle, TextStyle } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { Community, Settings } from "iconoir-react-native"
 
 export type TabNavigatorParamList = {
   Settings: undefined
@@ -35,7 +36,8 @@ export const TabNavigator = () => {
         options={{
           // tabBarLabel: translate("demoNavigator.componentsTab"),
           tabBarIcon: ({ focused }) => (
-            <Icon icon="components" color={focused ? colors.tint : undefined} size={30} />
+            // <Icon icon="components" color={focused ? colors.tint : undefined} size={30} />
+            <Settings height={30} width={30} color={focused ? colors.tint : colors.text} />
           ),
         }}
       />
@@ -46,7 +48,7 @@ export const TabNavigator = () => {
         options={{
           // tabBarLabel: translate("demoNavigator.communityTab"),
           tabBarIcon: ({ focused }) => (
-            <Icon icon="community" color={focused ? colors.tint : undefined} size={30} />
+            <Community height={30} width={30} color={focused ? colors.tint : colors.text} />
           ),
         }}
       />

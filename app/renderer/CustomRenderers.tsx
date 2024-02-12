@@ -5,6 +5,20 @@ import { GuidePageStackNavigatorParamList } from "app/navigators"
 import React from "react"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
+import FastImage from "react-native-fast-image"
+import { t } from "i18n-js"
+
+const YourImage = () => (
+  <FastImage
+    style={{ width: 200, height: 200 }}
+    source={{
+      uri: "https://unsplash.it/400/400?image=1",
+      headers: { Authorization: "someAuthToken" },
+      priority: FastImage.priority.normal,
+    }}
+    resizeMode={FastImage.resizeMode.contain}
+  />
+)
 
 export const renderersProps = {
   img: {
@@ -27,5 +41,22 @@ export const customRenderers = {
     }
 
     return <Button title={buttonTitle} onPress={handlePress} />
+  },
+  img: ({ tnode }: customRendererProps) => {
+    const imgSrc = tnode.attributes?.src
+
+    console.log(tnode.attributes)
+
+    return (
+      <FastImage
+        style={{ width: 200, height: 200 }}
+        source={{
+          uri: "https://unsplash.it/400/400?image=1",
+          headers: { Authorization: "someAuthToken" },
+          priority: FastImage.priority.normal,
+        }}
+        resizeMode={FastImage.resizeMode.contain}
+      />
+    )
   },
 }

@@ -32,6 +32,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { ViewStyle } from "react-native"
 import { TRenderEngineProvider, RenderHTMLConfigProvider } from "react-native-render-html"
 import { customHTMLElementModels, customRenderers, renderersProps } from "./renderer"
+import { IconoirProvider } from "iconoir-react-native"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
@@ -104,11 +105,20 @@ function App(props: AppProps) {
         <GestureHandlerRootView style={$container}>
           <TRenderEngineProvider customHTMLElementModels={customHTMLElementModels}>
             <RenderHTMLConfigProvider renderers={customRenderers} renderersProps={renderersProps}>
-              <AppNavigator
-                linking={linking}
-                initialState={initialNavigationState}
-                onStateChange={onNavigationStateChange}
-              />
+              <IconoirProvider
+                iconProps={{
+                  color: "#181014",
+                  strokeWidth: 2,
+                  width: "30",
+                  height: "30",
+                }}
+              >
+                <AppNavigator
+                  linking={linking}
+                  initialState={initialNavigationState}
+                  onStateChange={onNavigationStateChange}
+                />
+              </IconoirProvider>
             </RenderHTMLConfigProvider>
           </TRenderEngineProvider>
         </GestureHandlerRootView>

@@ -11,6 +11,7 @@ import {
   GuidePageStackNavigatorParamList,
 } from "./GuidePageStackNavigator"
 import { NavigatorScreenParams } from "@react-navigation/native"
+import { DocMagnifyingGlass, FaceId, HomeSimple, Settings } from "iconoir-react-native"
 
 export type GuideTabNavigatorParamList = {
   Settings: undefined
@@ -41,7 +42,7 @@ export const GuideTabNavigator = () => {
         options={{
           // tabBarLabel: translate("demoNavigator.componentsTab"),
           tabBarIcon: ({ focused }) => (
-            <Icon icon="components" color={focused ? colors.tint : undefined} size={30} />
+            <Settings height={30} width={30} color={focused ? colors.tint : colors.text} />
           ),
         }}
       />
@@ -52,7 +53,7 @@ export const GuideTabNavigator = () => {
         options={{
           // tabBarLabel: translate("demoNavigator.communityTab"),
           tabBarIcon: ({ focused }) => (
-            <Icon icon="community" color={focused ? colors.tint : undefined} size={30} />
+            <HomeSimple height={30} width={30} color={focused ? colors.tint : colors.text} />
           ),
         }}
       />
@@ -63,7 +64,7 @@ export const GuideTabNavigator = () => {
         options={{
           // tabBarLabel: translate("demoNavigator.communityTab"),
           tabBarIcon: ({ focused }) => (
-            <Icon icon="community" color={focused ? colors.tint : undefined} size={30} />
+            <FaceId height={30} width={30} color={focused ? colors.tint : colors.text} />
           ),
         }}
       />
@@ -74,7 +75,11 @@ export const GuideTabNavigator = () => {
         options={{
           // tabBarLabel: translate("demoNavigator.communityTab"),
           tabBarIcon: ({ focused }) => (
-            <Icon icon="community" color={focused ? colors.tint : undefined} size={30} />
+            <DocMagnifyingGlass
+              height={30}
+              width={30}
+              color={focused ? colors.tint : colors.text}
+            />
           ),
         }}
       />
