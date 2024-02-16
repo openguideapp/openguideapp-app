@@ -33,6 +33,12 @@ export const SettingsScreen: FC<SettingsScreenProps> = observer(function Setting
         tx="welcomeScreen.letsGo"
         onPress={goNext}
       />
+      <Button
+        testID="next-screen-button"
+        preset="reversed"
+        tx="welcomeScreen.letsGo"
+        onPress={() => navigation.navigate("Demo", { screen: "DemoShowroom", params: {} })}
+      />
     </Screen>
   )
 })

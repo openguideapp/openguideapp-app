@@ -8,11 +8,14 @@ import { Platform, NativeModules } from "react-native"
 // import AsyncStorage from "@react-native-async-storage/async-storage"
 import { ArgType } from "reactotron-core-client"
 import { mst } from "reactotron-mst"
+import mmkvPlugin from "reactotron-react-native-mmkv"
 
 import { clear } from "app/utils/storage"
 import { goBack, resetRoot, navigate } from "app/navigators/navigationUtilities"
 
 import { Reactotron } from "./ReactotronClient"
+
+import { storage } from "app/utils/storage"
 
 const reactotron = Reactotron.configure({
   name: require("../../package.json").name,
@@ -29,6 +32,13 @@ const reactotron = Reactotron.configure({
 
 if (Platform.OS !== "web") {
   // reactotron.setAsyncStorageHandler?.(AsyncStorage)
+  reactotron.use(
+    mmkvPlugin({
+      storage, // mmkv instance
+      ignore: ['secret', 'persist:root'],
+      // "persist:root" key will avoid showing redux persist update every time redux persist
+    })
+  )
   reactotron.useReactNative({
     networking: {
       ignoreUrls: /symbolicate/,

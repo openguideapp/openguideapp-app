@@ -43,12 +43,6 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(_pro
     }
   }, [guideUrl])
 
-  // choose guide
-  // download guide
-  // load guide
-  // navigate to GuideHomeScreen
-  // render guide
-
   return (
     <Screen style={$root} preset="scroll">
       <Modal visible={isLoading}>

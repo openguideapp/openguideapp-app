@@ -1,5 +1,5 @@
 import { MMKV } from "react-native-mmkv";
-const storage = new MMKV();
+export const storage = new MMKV();
 
 /**
  * Loads a string from storage.
