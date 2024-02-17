@@ -1,4 +1,3 @@
-import { observer } from "mobx-react-lite"
 import React, { ComponentType, FC, useEffect, useMemo } from "react"
 import {
   AccessibilityProps,
@@ -12,7 +11,6 @@ import {
   View,
   ViewStyle,
 } from "react-native"
-import { type ContentStyle } from "@shopify/flash-list"
 import Animated, {
   Extrapolate,
   interpolate,
@@ -20,6 +18,9 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated"
+import { type ContentStyle } from "@shopify/flash-list"
+import { observer } from "mobx-react-lite"
+
 import {
   Button,
   ButtonAccessoryProps,

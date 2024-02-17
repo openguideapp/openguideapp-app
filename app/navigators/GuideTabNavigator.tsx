@@ -1,17 +1,18 @@
 import React from "react"
-import { GuidePageScreen, GuideSearchScreen, HomeScreen, SettingsScreen } from "app/screens"
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import { Icon } from "app/components"
-import { colors, spacing, typography } from "app/theme"
-import { translate } from "app/i18n"
-import { ViewStyle, TextStyle } from "react-native"
+import { TextStyle,ViewStyle } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import { NavigatorScreenParams } from "@react-navigation/native"
+import { Icon } from "app/components"
+import { translate } from "app/i18n"
+import { GuidePageScreen, GuideSearchScreen, HomeScreen, SettingsScreen } from "app/screens"
+import { colors, spacing, typography } from "app/theme"
+import { DocMagnifyingGlass, FaceId, HomeSimple, Settings } from "iconoir-react-native"
+
 import {
   GuidePageStackNavigator,
   GuidePageStackNavigatorParamList,
 } from "./GuidePageStackNavigator"
-import { NavigatorScreenParams } from "@react-navigation/native"
-import { DocMagnifyingGlass, FaceId, HomeSimple, Settings } from "iconoir-react-native"
 
 export type GuideTabNavigatorParamList = {
   Settings: undefined

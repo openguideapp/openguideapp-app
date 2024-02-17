@@ -4,6 +4,8 @@
  * Generally speaking, it will contain an auth flow (registration, login, forgot password)
  * and a "main" flow which the user will use once logged in.
  */
+import React from "react"
+import { useColorScheme } from "react-native"
 import {
   DarkTheme,
   DefaultTheme,
@@ -11,17 +13,17 @@ import {
   NavigatorScreenParams,
 } from "@react-navigation/native"
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
-import { observer } from "mobx-react-lite"
-import React from "react"
-import { useColorScheme } from "react-native"
 import * as Screens from "app/screens"
+import { colors } from "app/theme"
+import { observer } from "mobx-react-lite"
+
 import Config from "../config"
 import { useStores } from "../models"
-import { DemoTabParamList, DemoNavigator } from "./DemoNavigator"
+
+import { DemoNavigator,DemoTabParamList } from "./DemoNavigator"
+import { GuideTabNavigator,GuideTabNavigatorParamList } from "./GuideTabNavigator"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
-import { colors } from "app/theme"
 import { TabNavigator, TabNavigatorParamList } from "./TabNavigator"
-import { GuideTabNavigatorParamList, GuideTabNavigator } from "./GuideTabNavigator"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -51,6 +53,9 @@ export type AppStackParamList = {
   GuideLoading: undefined
   // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
 }
+
+// TODO: create dynamic tab navigator 
+// https://github.com/react-navigation/react-navigation/issues/3945#issuecomment-404732749
 
 /**
  * This is a list of all the route names that will exit the app if the back button
