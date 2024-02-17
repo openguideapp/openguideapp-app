@@ -3,6 +3,7 @@ import { observer } from "mobx-react-lite"
 import { ViewStyle } from "react-native"
 import { AppStackScreenProps } from "app/navigators"
 import { Button, Screen, Text } from "app/components"
+import FastImage from "react-native-fast-image"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "app/models"
 
@@ -38,6 +39,10 @@ export const SettingsScreen: FC<SettingsScreenProps> = observer(function Setting
         preset="reversed"
         tx="welcomeScreen.letsGo"
         onPress={() => navigation.navigate("Demo", { screen: "DemoShowroom", params: {} })}
+      />
+      <FastImage
+        source={{ uri: "https://unsplash.it/400/400?image=1" }}
+        style={{ width: "100%", height: 200, resizeMode: "stretch" }}
       />
     </Screen>
   )

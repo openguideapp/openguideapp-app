@@ -1,17 +1,21 @@
-import React, { ComponentType, FC, useEffect, useMemo } from "react"
+import React, { ComponentType, FC, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import {
   AccessibilityProps,
   ActivityIndicator,
   Animated,
+  Image,
   ImageSourcePropType,
   ImageStyle,
+  LayoutChangeEvent,
   Modal,
   Platform,
   StyleSheet,
   TextStyle,
+  useWindowDimensions,
   View,
   ViewStyle,
 } from "react-native"
+import FastImage from "react-native-fast-image"
 import {
   Extrapolate,
   interpolate,
@@ -19,21 +23,22 @@ import {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated"
+import Carousel, { ICarouselInstance } from "react-native-reanimated-carousel"
 import { ContentStyle } from "@shopify/flash-list"
 import {
+  AutoImage,
   Button,
   ButtonAccessoryProps,
   Card,
   EmptyState,
   Icon,
-  Image,
   ListView,
   Screen,
   Text,
   Toggle,
 } from "app/components"
 // import { useNavigation } from "@react-navigation/native"
-import { GuideListing, useStores } from "app/models"
+import { GuideListing, useComponentSize, useStores } from "app/models"
 import { AppStackScreenProps } from "app/navigators"
 import { openLinkInBrowser } from "app/utils/openLinkInBrowser"
 // import { isRTL } from "expo-localization"
@@ -43,8 +48,6 @@ import { observer } from "mobx-react-lite"
 import { isRTL, translate } from "../i18n"
 import { colors, spacing } from "../theme"
 import { delay } from "../utils/delay"
-import Carousel from "react-native-reanimated-carousel"
-
 interface HomeScreenProps extends AppStackScreenProps<"Home"> {}
 
 const ICON_SIZE = 14
@@ -172,6 +175,17 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(_pro
   )
 })
 
+// const useComponentSize = () => {
+//   const [size, setSize] = useState(null)
+
+//   const onLayout = useCallback((event) => {
+//     const { width, height } = event.nativeEvent.layout
+//     setSize({ width, height })
+//   }, [])
+
+//   return [size, onLayout]
+// }
+
 const GuideListingCard = observer(function GuideListingCard({
   guideListing,
   isFavorite,
@@ -182,27 +196,76 @@ const GuideListingCard = observer(function GuideListingCard({
   isFavorite: boolean
 }) {
   const liked = useSharedValue(isFavorite ? 1 : 0)
+  const windowWidth = useWindowDimensions().width
+  const scrollOffsetValue = useSharedValue<number>(0)
+  const [data, setData] = React.useState([...new Array(4).keys()])
+  const [isVertical, setIsVertical] = React.useState(false)
+  const [isFast, setIsFast] = React.useState(false)
+  const [isAutoPlay, setIsAutoPlay] = React.useState(false)
+  const [isPagingEnabled, setIsPagingEnabled] = React.useState(true)
+  const ref = React.useRef<ICarouselInstance>(null)
 
   const imageUri = useMemo<ImageSourcePropType>(() => {
     return rnrImages[Math.floor(Math.random() * rnrImages.length)]
   }, [])
 
-  const Content = (
-    <>
-      <Carousel
-        data={rnrImages}
-        renderItem={({ item }) => <Image source={item} style={$itemThumbnail} />}
-        sliderWidth={300}
-        itemWidth={300}
-        loop
-        autoplay
-        autoplayInterval={3000}
-      />
-      <Text style={$metadataText} size="xs">
-        hallo hallo hallo
-      </Text>
-    </>
-  )
+  const baseOptions = isVertical
+    ? ({
+        vertical: true,
+        width: windowWidth,
+        height: windowWidth / 2,
+      } as const)
+    : ({
+        vertical: false,
+        width: windowWidth,
+        height: windowWidth / 2,
+      } as const)
+
+  const Content = () => {
+    const { size, onLayout } = useComponentSize()
+    const width = size?.width ?? 0
+
+    return (
+      <>
+        <View onLayout={onLayout}>
+          <Carousel
+            {...baseOptions}
+            loop
+            enabled // Default is true, just for demo
+            ref={ref}
+            defaultScrollOffsetValue={scrollOffsetValue}
+            testID={"xxx"}
+            style={{ width: "100%" }}
+            autoPlay={isAutoPlay}
+            autoPlayInterval={isFast ? 100 : 2000}
+            data={guideListing.thumbnails}
+            // onScrollStart={() => {
+            //   console.log("===1")
+            // }}
+            onScrollEnd={() => {
+              console.log("===2")
+            }}
+            // onConfigurePanGesture={(g) => g.enabled(false)}
+            pagingEnabled={true}
+            onSnapToItem={(index) =>
+              console.log("current index:", index, guideListing.thumbnails[index])
+            }
+            renderItem={({ index }) => (
+              <FastImage
+                source={{ uri: guideListing.thumbnails[index] }}
+                style={{ width, height: width / 1.5 }}
+                resizeMode={FastImage.resizeMode.cover}
+              />
+            )}
+          />
+
+          <Text style={$metadataText} size="xs">
+            hallo hallo hallo
+          </Text>
+        </View>
+      </>
+    )
+  }
 
   // Grey heart
   // const animatedLikeButtonStyles = useAnimatedStyle(() => {
@@ -322,10 +385,10 @@ const GuideListingCard = observer(function GuideListingCard({
           </Text>
         </View>
       }
-      ContentComponent={<Image source={imageUri} style={$itemThumbnail} />}
+      ContentComponent={Content()}
       // `${guideListing.title} - ${guideListing.description}`}
       // {...accessibilityHintProps}
-      RightComponent={<Image source={imageUri} style={$itemThumbnail} />}
+      // RightComponent={<Image source={imageUri} style={$itemThumbnail} />}
       FooterComponent={
         <Button
           onPress={handlePressFavorite}

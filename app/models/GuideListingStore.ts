@@ -9,9 +9,9 @@ const mockGuideListings = [
     "author": "Johannes Biermann",
     "description": "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.",
     "thumbnails": [
-      "https://source.unsplash.com/1600x900/?nature,water",
-      "https://source.unsplash.com/1600x900/?nature,water",
-      "https://source.unsplash.com/1600x900/?nature,water"
+      "https://unsplash.it/400/400?image=1",
+      "https://unsplash.it/400/400?image=1",
+      "https://unsplash.it/400/400?image=1"
     ],
     "tags": [
       "museum",
@@ -24,9 +24,9 @@ const mockGuideListings = [
     "author": "Johannes Biermann",
     "description": "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.",
     "thumbnails": [
-      "https://source.unsplash.com/1600x900/?nature,water",
-      "https://source.unsplash.com/1600x900/?nature,water",
-      "https://source.unsplash.com/1600x900/?nature,water"
+      "https://unsplash.it/400/400?image=1",
+      "https://unsplash.it/400/400?image=1",
+      "https://unsplash.it/400/400?image=1"
     ],
     "tags": [
       "museum",
@@ -39,9 +39,9 @@ const mockGuideListings = [
     "author": "Johannes Biermann",
     "description": "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.",
     "thumbnails": [
-      "https://source.unsplash.com/1600x900/?nature,water",
-      "https://source.unsplash.com/1600x900/?nature,water",
-      "https://source.unsplash.com/1600x900/?nature,water"
+      "https://unsplash.it/400/400?image=1",
+      "https://unsplash.it/400/400?image=1",
+      "https://unsplash.it/400/400?image=1"
     ],
     "tags": [
       "museum",
