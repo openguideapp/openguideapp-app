@@ -43,6 +43,7 @@ import { observer } from "mobx-react-lite"
 import { isRTL, translate } from "../i18n"
 import { colors, spacing } from "../theme"
 import { delay } from "../utils/delay"
+import Carousel from "react-native-reanimated-carousel"
 
 interface HomeScreenProps extends AppStackScreenProps<"Home"> {}
 
@@ -186,6 +187,23 @@ const GuideListingCard = observer(function GuideListingCard({
     return rnrImages[Math.floor(Math.random() * rnrImages.length)]
   }, [])
 
+  const Content = (
+    <>
+      <Carousel
+        data={rnrImages}
+        renderItem={({ item }) => <Image source={item} style={$itemThumbnail} />}
+        sliderWidth={300}
+        itemWidth={300}
+        loop
+        autoplay
+        autoplayInterval={3000}
+      />
+      <Text style={$metadataText} size="xs">
+        hallo hallo hallo
+      </Text>
+    </>
+  )
+
   // Grey heart
   // const animatedLikeButtonStyles = useAnimatedStyle(() => {
   //   return {
@@ -304,7 +322,7 @@ const GuideListingCard = observer(function GuideListingCard({
           </Text>
         </View>
       }
-      content={<Image source={imageUri} style={$itemThumbnail} />}
+      ContentComponent={<Image source={imageUri} style={$itemThumbnail} />}
       // `${guideListing.title} - ${guideListing.description}`}
       // {...accessibilityHintProps}
       RightComponent={<Image source={imageUri} style={$itemThumbnail} />}
