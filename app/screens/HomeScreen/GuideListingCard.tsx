@@ -1,4 +1,5 @@
 import * as React from "react"
+import { useEffect } from "react"
 import {
   AccessibilityProps,
   ImageSourcePropType,
@@ -11,6 +12,7 @@ import {
 import FastImage from "react-native-fast-image"
 import Animated, { useSharedValue, withSpring } from "react-native-reanimated"
 import Carousel, { ICarouselInstance } from "react-native-reanimated-carousel"
+import { useNavigation } from "@react-navigation/native"
 import {
   AutoImage,
   Button,
@@ -23,7 +25,7 @@ import {
   Text,
   Toggle,
 } from "app/components"
-import { GuideListing } from "app/models"
+import { GuideListing, useStores } from "app/models"
 import { useComponentSize } from "app/utils/useComponentSize"
 import { observer } from "mobx-react-lite"
 
@@ -31,6 +33,7 @@ import { isRTL, translate } from "../../i18n"
 import { colors, spacing } from "../../theme"
 
 import { AnimatedDotCarousel } from "./AnimatedDotCarousel"
+import { set } from "date-fns"
 
 export const GuideListingCard = observer(function GuideListingCard({
   guideListing,
@@ -50,10 +53,43 @@ export const GuideListingCard = observer(function GuideListingCard({
   const [isAutoPlay, setIsAutoPlay] = React.useState(false)
   const ref = React.useRef<ICarouselInstance>(null)
   const progressValue = useSharedValue<number>(0)
+  const { guideStore } = useStores()
+  const [guideUrl, setGuideUrl] = React.useState<string>("")
+  const [isLoading, setIsLoading] = React.useState(false)
+  const [isError, setIsError] = React.useState(false)
+
+  const navigation = useNavigation()
 
   //   const imageUri = React.useMemo<ImageSourcePropType>(() => {
   //     return rnrImages[Math.floor(Math.random() * rnrImages.length)]
   //   }, [])
+
+  useEffect(() => {
+    const fetchGuide = async () => {
+      setGuideUrl("")
+      // setIsError
+      setIsLoading(true)
+      try {
+        await guideStore.fetchGuide()
+      } catch (error) {
+        setIsError(true)
+      }
+      setIsLoading(false)
+
+      navigation.replace("GuideTabNavigator", {
+        screen: "GuidePageStackNavigator",
+        params: {
+          screen: "GuidePage",
+          params: {
+            path: "home.md",
+          },
+        },
+      })
+    }
+    if (guideUrl !== "") {
+      fetchGuide()
+    }
+  }, [guideUrl])
 
   // https://reanimated-carousel.dev/Examples/normal
   const Content = () => {
@@ -192,8 +228,9 @@ export const GuideListingCard = observer(function GuideListingCard({
   }
 
   const handlePressCard = () => {
-    // openLinkInBrowser(guideListing.enclosure.link)
     console.log("Card pressed")
+    console.log("Setting guideUrl to", guideListing.downloadUrl)
+    setGuideUrl(guideListing.downloadUrl)
   }
 
   const ButtonLeftAccessory: React.ComponentType<ButtonAccessoryProps> = React.useMemo(

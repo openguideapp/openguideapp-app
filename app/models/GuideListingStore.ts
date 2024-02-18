@@ -17,7 +17,8 @@ const mockGuideListings = [
       "museum",
       "test",
       "fruity"
-    ]
+    ],
+    downloadUrl: "https://unsplash.it/400/400?image=1"
   },
   {
     "title": "Test Guide",
@@ -32,7 +33,8 @@ const mockGuideListings = [
       "museum",
       "test",
       "fruity"
-    ]
+    ],
+    downloadUrl: "https://unsplash.it/400/400?image=1"
   },
   {
     "title": "Test Guide",
@@ -47,7 +49,8 @@ const mockGuideListings = [
       "museum",
       "test",
       "fruity"
-    ]
+    ],
+    downloadUrl: "https://unsplash.it/400/400?image=1"
   },
 ]
 

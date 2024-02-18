@@ -71,8 +71,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = observer(function HomeScree
 
   const [refreshing, setRefreshing] = React.useState(false)
 
-  // const { navigation } = _props
-
   // initially, kick off a background refresh without the refreshing UI
   React.useEffect(() => {
     ;(async function load() {
@@ -87,33 +85,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = observer(function HomeScree
     await Promise.all([guideListingStore.fetchGuideListings(), delay(750)])
     setRefreshing(false)
   }
-
-  // useEffect(() => {
-  //   const fetchGuide = async () => {
-  //     setGuideUrl("")
-  //     setIsError
-  //     setIsLoading(true)
-  //     try {
-  //       await guideStore.fetchGuide()
-  //     } catch (error) {
-  //       setIsError(true)
-  //     }
-  //     setIsLoading(false)
-
-  //     navigation.replace("GuideTabNavigator", {
-  //       screen: "GuidePageStackNavigator",
-  //       params: {
-  //         screen: "GuidePage",
-  //         params: {
-  //           path: "home.md",
-  //         },
-  //       },
-  //     })
-  //   }
-  //   if (guideUrl !== "") {
-  //     fetchGuide()
-  //   }
-  // }, [guideUrl])
 
   return (
     <Screen preset="fixed" safeAreaEdges={["top"]} contentContainerStyle={$screenContentContainer}>
@@ -180,8 +151,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = observer(function HomeScree
     </Screen>
   )
 })
-
-const colorsA = ["#26292E", "#899F9C", "#B3C680", "#5C6265", "#F5D399", "#F1F1F1"]
 
 // #region Styles
 const $screenContentContainer: ViewStyle = {

@@ -1,5 +1,5 @@
 import React from "react"
-import { TextStyle,ViewStyle } from "react-native"
+import { TextStyle, ViewStyle } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { NavigatorScreenParams } from "@react-navigation/native"
@@ -52,7 +52,7 @@ export const GuideTabNavigator = () => {
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarLabel: translate("tabNavigator.hom"),
+          tabBarLabel: translate("tabNavigator.home"),
           tabBarIcon: ({ focused }) => (
             <HomeSimple height={30} width={30} color={focused ? colors.tint : colors.text} />
           ),
