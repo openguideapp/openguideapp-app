@@ -1,14 +1,12 @@
-export * from "./WelcomeScreen"
-
-export * from "./LoginScreen"
 export * from "./DemoCommunityScreen"
 export * from "./DemoDebugScreen"
 export * from "./DemoShowroomScreen/DemoShowroomScreen"
-
 export * from "./ErrorScreen/ErrorBoundary"
+export * from "./LoginScreen"
+export * from "./WelcomeScreen"
 // export other screens here
-export * from "./GuidePageScreen"
 export * from "./GuideMapScreen"
+export * from "./GuidePageScreen"
 export * from "./GuideSearchScreen"
-export * from "./HomeScreen"
+export * from "./HomeScreen/HomeScreen"
 export * from "./SettingsScreen"
