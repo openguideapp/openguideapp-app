@@ -1,8 +1,9 @@
-import React, { ComponentType, FC, useCallback, useEffect, useMemo, useRef, useState } from "react"
+import * as React from "react"
 import {
   AccessibilityProps,
   ActivityIndicator,
   Animated,
+  Dimensions,
   Image,
   ImageSourcePropType,
   ImageStyle,
@@ -38,9 +39,10 @@ import {
   Toggle,
 } from "app/components"
 // import { useNavigation } from "@react-navigation/native"
-import { GuideListing, useComponentSize, useStores } from "app/models"
+import { GuideListing, useStores } from "app/models"
 import { AppStackScreenProps } from "app/navigators"
 import { openLinkInBrowser } from "app/utils/openLinkInBrowser"
+import { useComponentSize } from "app/utils/useComponentSize"
 // import { isRTL } from "expo-localization"
 // import { translate } from "i18n-js"
 import { observer } from "mobx-react-lite"
@@ -57,7 +59,7 @@ const rnrImage2 = require("../../assets/images/demo/rnr-image-2.png")
 const rnrImage3 = require("../../assets/images/demo/rnr-image-3.png")
 const rnrImages = [rnrImage1, rnrImage2, rnrImage3]
 
-export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(_props) {
+export const HomeScreen: React.FC<HomeScreenProps> = observer(function HomeScreen(_props) {
   const { guideListingStore } = useStores()
   // const [guideUrl, setGuideUrl] = React.useState<string>("")
   const [isLoading, setIsLoading] = React.useState(false)
@@ -68,7 +70,7 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(_pro
   // const { navigation } = _props
 
   // initially, kick off a background refresh without the refreshing UI
-  useEffect(() => {
+  React.useEffect(() => {
     ;(async function load() {
       setIsLoading(true)
       await guideListingStore.fetchGuideListings()
@@ -186,6 +188,8 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(_pro
 //   return [size, onLayout]
 // }
 
+const PAGE_WIDTH = Dimensions.get("window").width
+
 const GuideListingCard = observer(function GuideListingCard({
   guideListing,
   isFavorite,
@@ -205,25 +209,29 @@ const GuideListingCard = observer(function GuideListingCard({
   const [isPagingEnabled, setIsPagingEnabled] = React.useState(true)
   const ref = React.useRef<ICarouselInstance>(null)
 
-  const imageUri = useMemo<ImageSourcePropType>(() => {
+  const imageUri = React.useMemo<ImageSourcePropType>(() => {
     return rnrImages[Math.floor(Math.random() * rnrImages.length)]
   }, [])
 
-  const baseOptions = isVertical
-    ? ({
-        vertical: true,
-        width: windowWidth,
-        height: windowWidth / 2,
-      } as const)
-    : ({
-        vertical: false,
-        width: windowWidth,
-        height: windowWidth / 2,
-      } as const)
-
+  // https://reanimated-carousel.dev/Examples/normal
   const Content = () => {
     const { size, onLayout } = useComponentSize()
-    const width = size?.width ?? 0
+    const width = size?.width ?? PAGE_WIDTH * 0.9
+
+    console.log("isVertical", isVertical)
+    console.log("width", width)
+
+    const baseOptions = isVertical
+      ? ({
+          vertical: true,
+          width,
+          height: width / 1.5,
+        } as const)
+      : ({
+          vertical: false,
+          width,
+          height: width / 1.5,
+        } as const)
 
     return (
       <>
@@ -253,7 +261,8 @@ const GuideListingCard = observer(function GuideListingCard({
             renderItem={({ index }) => (
               <FastImage
                 source={{ uri: guideListing.thumbnails[index] }}
-                style={{ width, height: width / 1.5 }}
+                // style={{ width, height: width / 1.5 }}
+                style={{ width: 290, height: "100%" }}
                 resizeMode={FastImage.resizeMode.cover}
               />
             )}
@@ -295,7 +304,7 @@ const GuideListingCard = observer(function GuideListingCard({
    * Android has a "longpress" accessibility action. iOS does not, so we just have to use a hint.
    * @see https://reactnative.dev/docs/accessibility#accessibilityactions
    */
-  const accessibilityHintProps = useMemo(
+  const accessibilityHintProps = React.useMemo(
     () =>
       Platform.select<AccessibilityProps>({
         ios: {
@@ -332,7 +341,7 @@ const GuideListingCard = observer(function GuideListingCard({
     console.log("Card pressed")
   }
 
-  const ButtonLeftAccessory: ComponentType<ButtonAccessoryProps> = useMemo(
+  const ButtonLeftAccessory: React.ComponentType<ButtonAccessoryProps> = React.useMemo(
     () =>
       function ButtonLeftAccessory() {
         return (

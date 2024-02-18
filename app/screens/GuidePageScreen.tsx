@@ -1,10 +1,10 @@
 import React, { FC } from "react"
-import { observer } from "mobx-react-lite"
 import { ViewStyle } from "react-native"
-import { AppStackScreenProps } from "app/navigators"
 import { Button, Renderer, Screen, Text } from "app/components"
 // import { useNavigation } from "@react-navigation/native"
 import { useStores } from "app/models"
+import { AppStackScreenProps } from "app/navigators"
+import { observer } from "mobx-react-lite"
 
 export interface GuidePageScreenProps extends AppStackScreenProps<"GuidePage"> {}
 
