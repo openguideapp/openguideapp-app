@@ -1,8 +1,10 @@
 import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
+
 import { withSetPropAction } from "./helpers/withSetPropAction"
 import { GuideImageModel } from "./GuideImage"
 import { GuideMapPathModel } from "./GuideMapPath"
 import { GuidePageModel } from "./GuidePage"
+import { GuideStyle, GuideStyleModel } from './GuideStyle';
 
 /**
  * Model description here for TypeScript hints.
@@ -13,6 +15,7 @@ export const GuideStoreModel = types
     pages: types.array(GuidePageModel),
     images: types.array(GuideImageModel),
     mapPaths: types.array(GuideMapPathModel),
+    style: GuideStyleModel,
     loading: false,
   })
   .actions(withSetPropAction)
@@ -39,7 +42,7 @@ export const GuideStoreModel = types
         return page
       } else {
         return {
-          path: path,
+          path,
           html: `<h1>${path} Not Found!</h1>`,
           meta: []
         }
