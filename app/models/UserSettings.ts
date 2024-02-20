@@ -8,7 +8,7 @@ import { withSetPropAction } from "./helpers/withSetPropAction"
 export const UserSettingsModel = types
   .model("UserSettings")
   .props({
-    lng: "en",
+    lng: "en", // TODO: this should be init by i18n
   })
   .actions(withSetPropAction)
   .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars

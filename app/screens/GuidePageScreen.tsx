@@ -1,31 +1,41 @@
-import React, { FC } from "react"
+import React, { FC, useEffect, useState } from "react"
 import { ViewStyle } from "react-native"
 import { Button, Renderer, Screen, Text } from "app/components"
-// import { useNavigation } from "@react-navigation/native"
 import { useStores } from "app/models"
 import { AppStackScreenProps } from "app/navigators"
+import { set } from "date-fns"
 import { observer } from "mobx-react-lite"
 
 export interface GuidePageScreenProps extends AppStackScreenProps<"GuidePage"> {}
 
-export const GuidePageScreen: FC<GuidePageScreenProps> = observer(function GuidePageScreen(_props) {
-  // Pull in one of our MST stores
-  const { guideStore } = useStores()
-  const { navigation } = _props
-  console.log("GuidePageScreen _props?.route?.params", _props?.route?.params)
-  const { path } = _props?.route?.params
+export const GuidePageScreen: FC<GuidePageScreenProps> = observer(function GuidePageScreen(props) {
+  const { guideStore, userSettings } = useStores()
+  const { navigation } = props
+  console.log("GuidePageScreen props?.route?.params", props?.route?.params)
+  const { path } = props?.route?.params
 
-  // if (!path) {
-  //   return <Text text="No path provided" />
-  // }
+  const [currentLanguage, setCurrentLanguage] = useState("")
+  const [currentPath, setCurrentPath] = useState(path)
+  // setCurrentLanguage(userSettings.lng) // Set the initial language
+  console.log("GuidePageScreen lng", currentLanguage)
 
-  function goNext() {
-    // navigation.navigate("Demo", { screen: "DemoShowroom", params: {} })
-    // navigation.push("GuidePageStackNavigator", { screen: "GuidePage" })
-    navigation.push("GuidePage")
-  }
+  useEffect(() => {
+    if (currentLanguage !== userSettings.lng) {
+      // TODO: This should happen in the store
+      // TODO: also fallback home.md if path is not found
+      // TODO: more error management
+      const paths: string[] = currentPath.split("/")
+      const newPath: string = paths
+        .map((segment: string, index: number): string => (index === 1 ? userSettings.lng : segment))
+        .join("/")
+      console.log("path after replace", newPath)
+      setCurrentPath(newPath) // Update the path
+      setCurrentLanguage(userSettings.lng) // Update the language
+    }
+  }, [userSettings.lng]) // Only re-run the effect if `userSettings.lng` changes
 
-  const page = guideStore.getGuidePage(path)
+  const page = guideStore.getGuidePage(currentPath) // Use `currentPath` which reflects the latest language setting
+
   return (
     <Screen style={$root} preset="scroll">
       <Text text="guidePage" />

@@ -15,7 +15,7 @@ export const GuideStoreModel = types
     pages: types.array(GuidePageModel),
     images: types.array(GuideImageModel),
     mapPaths: types.array(GuideMapPathModel),
-    style: GuideStyleModel,
+    style: types.array(GuideStyleModel),
     loading: false,
   })
   .actions(withSetPropAction)

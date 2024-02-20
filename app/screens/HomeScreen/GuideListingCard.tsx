@@ -27,13 +27,13 @@ import {
 } from "app/components"
 import { GuideListing, useStores } from "app/models"
 import { useComponentSize } from "app/utils/useComponentSize"
+import { set } from "date-fns"
 import { observer } from "mobx-react-lite"
 
 import { isRTL, translate } from "../../i18n"
 import { colors, spacing } from "../../theme"
 
 import { AnimatedDotCarousel } from "./AnimatedDotCarousel"
-import { set } from "date-fns"
 
 export const GuideListingCard = observer(function GuideListingCard({
   guideListing,
@@ -59,6 +59,7 @@ export const GuideListingCard = observer(function GuideListingCard({
   const [isError, setIsError] = React.useState(false)
 
   const navigation = useNavigation()
+  const { userSettings } = useStores()
 
   //   const imageUri = React.useMemo<ImageSourcePropType>(() => {
   //     return rnrImages[Math.floor(Math.random() * rnrImages.length)]
@@ -76,12 +77,15 @@ export const GuideListingCard = observer(function GuideListingCard({
       }
       setIsLoading(false)
 
+      const lng = userSettings.lng
+
       navigation.replace("GuideTabNavigator", {
         screen: "GuidePageStackNavigator",
         params: {
           screen: "GuidePage",
           params: {
-            path: "home.md",
+            // TODO: Check if this part exists!
+            path: `content/${lng}/home.md`,
           },
         },
       })

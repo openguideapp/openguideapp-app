@@ -1,25 +1,25 @@
 import React, { FC } from "react"
-import { observer } from "mobx-react-lite"
 import { ViewStyle } from "react-native"
-import { AppStackScreenProps } from "app/navigators"
 import { Button, Screen, Text } from "app/components"
-import FastImage from "react-native-fast-image"
 // import { useNavigation } from "@react-navigation/native"
-// import { useStores } from "app/models"
+import { useStores } from "app/models"
+import { AppStackScreenProps } from "app/navigators"
+import { observer } from "mobx-react-lite"
 
 interface SettingsScreenProps extends AppStackScreenProps<"Settings"> {}
 
 export const SettingsScreen: FC<SettingsScreenProps> = observer(function SettingsScreen(_props) {
   const { navigation } = _props
 
-  // Pull in one of our MST stores
-  // const { someStore, anotherStore } = useStores()
+  const { userSettings } = useStores()
 
   function goNext() {
     // navigation.navigate("Demo", { screen: "DemoShowroom", params: {} })
     // navigation.navigate("GuideTabNavigator", { screen: "GuideHome" })
     navigation.replace("GuideTabNavigator", { screen: "GuidePage" })
   }
+
+  // userSettings.setProp("lng", "de")
 
   // console.log(navigation.getState())
 
@@ -40,9 +40,21 @@ export const SettingsScreen: FC<SettingsScreenProps> = observer(function Setting
         tx="welcomeScreen.letsGo"
         onPress={() => navigation.navigate("Demo", { screen: "DemoShowroom", params: {} })}
       />
-      <FastImage
-        source={{ uri: "https://unsplash.it/400/400?image=1" }}
-        style={{ width: "100%", height: 200, resizeMode: "stretch" }}
+
+      <Button
+        testID="next-screen-button"
+        preset="reversed"
+        // tx="welcomeScreen.letsGo"
+        text="Set Lng to de"
+        onPress={() => userSettings.setProp("lng", "de")}
+      />
+
+      <Button
+        testID="next-screen-button"
+        preset="reversed"
+        // tx="welcomeScreen.letsGo"
+        text="Set Lng to en"
+        onPress={() => userSettings.setProp("lng", "en")}
       />
     </Screen>
   )
