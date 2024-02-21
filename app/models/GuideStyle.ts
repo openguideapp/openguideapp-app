@@ -10,7 +10,8 @@ export const GuideStyleModel = types
   .props({
     path: "",
     downloadUrl: "",
-    style: types.frozen({ "": { "": "" }, })
+    // style: types.frozen({ "": { "": "" }, })
+    style: types.map(types.map(types.string))
   })
   .actions(withSetPropAction)
   .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars

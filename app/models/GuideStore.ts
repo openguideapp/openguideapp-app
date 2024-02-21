@@ -15,7 +15,8 @@ export const GuideStoreModel = types
     pages: types.array(GuidePageModel),
     images: types.array(GuideImageModel),
     mapPaths: types.array(GuideMapPathModel),
-    style: types.array(GuideStyleModel),
+    // style: types.array(GuideStyleModel),
+    styles: types.frozen({}),
     loading: false,
   })
   .actions(withSetPropAction)
@@ -50,7 +51,7 @@ export const GuideStoreModel = types
     }
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions((store) => ({
-    async fetchGuide() {
+    async fetchGuide(lng = "en") {
       store.setProp("loading", true)
       // const response = await api.getEpisodes()
       // if (response.kind === "ok") {
@@ -58,12 +59,12 @@ export const GuideStoreModel = types
       // } else {
       //   console.error(`Error fetching episodes: ${JSON.stringify(response)}`)
       // }
-      store.setProp("pages", guide.guidePages)
-      store.setProp("images", guide.guideImages)
-      store.setProp("mapPaths", guide.guideMapPaths)
+      store.setProp("pages", guide.languages[lng].pages)
+      store.setProp("images", guide.images)
+      store.setProp("mapPaths", guide.mapPaths)
+      store.setProp("styles", guide.styles)
 
       store.setProp("loading", false)
-      console.log("hallo loaded guide")
     },
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
 
@@ -74,26 +75,157 @@ export const createGuideStoreDefaultModel = () => types.optional(GuideStoreModel
 
 
 const guide = {
-  "guidePages": [
-    {
-      "downloadUrl": "https://raw.githubusercontent.com/openguideapp/openguideapp-test-guide/main/guide1.md",
-      "path": "guide1.md",
-      "html": "<p>Hello World 2 !</p>\n<button path=\"home.md\">Back to Home!</button>",
-      "meta": []
+  "languages": {
+    "de": {
+      "pages": [
+        {
+          "downloadUrl": "https://raw.githubusercontent.com/openguideapp/openguideapp-test-guide/main/content/de/frontmatter.md",
+          "path": "content/de/frontmatter.md",
+          "html": "<h1>Jupiter</h1>\n<button path=\"home.md\">Back to Home!</button>",
+          "meta": {
+            "layout": "solar-system"
+          }
+        },
+        {
+          "downloadUrl": "https://raw.githubusercontent.com/openguideapp/openguideapp-test-guide/main/content/de/guide1.md",
+          "path": "content/de/guide1.md",
+          "html": "<p>Hello World 2 !</p>\n<p><button path=\"home.md\">Back to Home!</button></p>",
+          "meta": {}
+        },
+        {
+          "downloadUrl": "https://raw.githubusercontent.com/openguideapp/openguideapp-test-guide/main/content/de/home.md",
+          "path": "content/de/home.md",
+          "html": "<h1>Hallo Welt!</h1>\n<p><button path=\"guide1.md\">To Guide 1!</button></p>\n<p><button path=\"imges.md\">To Images!</button></p>\n<p><button path=\"frontmatter.md\">Back to Home!</button></p>",
+          "meta": {}
+        },
+        {
+          "downloadUrl": "https://raw.githubusercontent.com/openguideapp/openguideapp-test-guide/main/content/de/images.md",
+          "path": "content/de/images.md",
+          "html": "<button path=\"home.md\"></button>\n<h1>Images with remote Url</h1>\n<p><img src=\"https://images.unsplash.com/photo-1696461353431-32c529d4585d?ixlib=rb-4.0.3&#x26;ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDR8RnpvM3p1T0hONnd8fGVufDB8fHx8fA%3D%3D&#x26;auto=format&#x26;fit=crop&#x26;w=400&#x26;q=60\" alt=\"image\" title=\"Temple Title\"></p>\n<h1>::Image Rule</h1>\n<div></div>\n<h1>Inline Html</h1>",
+          "meta": {}
+        }
+      ],
+      "listing": [
+        {
+          "title": "Test Guide",
+          "description": "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.",
+          "author": "Johannes Biermann",
+          "tags": [
+            "museum",
+            "test",
+            "fruty"
+          ],
+          "downloadUrl": "https://github.com/openguideapp/openguideapp-test-guide"
+        }
+      ]
     },
-    {
-      "downloadUrl": "https://raw.githubusercontent.com/openguideapp/openguideapp-test-guide/main/home.md",
-      "path": "home.md",
-      "html": "<h1>Hello World!</h1>\n<button path=\"guide1.md\">To Guide 1!</button>\n<button path=\"images.md\">To Images!</button>",
-      "meta": []
+    "en": {
+      "pages": [
+        {
+          "downloadUrl": "https://raw.githubusercontent.com/openguideapp/openguideapp-test-guide/main/content/en/frontmatter.md",
+          "path": "content/en/frontmatter.md",
+          "html": "<h1>Jupiter</h1>\n<button path=\"home.md\">Back to Home!</button>",
+          "meta": {
+            "layout": "solar-system"
+          }
+        },
+        {
+          "downloadUrl": "https://raw.githubusercontent.com/openguideapp/openguideapp-test-guide/main/content/en/guide1.md",
+          "path": "content/en/guide1.md",
+          "html": "<p>Hello World 2 !</p>\n<p><button path=\"home.md\">Back to Home!</button></p>",
+          "meta": {}
+        },
+        {
+          "downloadUrl": "https://raw.githubusercontent.com/openguideapp/openguideapp-test-guide/main/content/en/home.md",
+          "path": "content/en/home.md",
+          "html": "<h1 style=\"font-size: 10em;\">Hello World!</h1>\n<p><button path=\"guide1.md\">To Guide 1!</button></p>\n<p><button path=\"imges.md\">To Images!</button></p>\n<p><button path=\"frontmatter.md\">Back to Home!</button></p>",
+          "meta": {}
+        },
+        {
+          "downloadUrl": "https://raw.githubusercontent.com/openguideapp/openguideapp-test-guide/main/content/en/images.md",
+          "path": "content/en/images.md",
+          "html": "<button path=\"home.md\"></button>\n<h1>Images with remote Url</h1>\n<p><img src=\"https://images.unsplash.com/photo-1696461353431-32c529d4585d?ixlib=rb-4.0.3&#x26;ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDR8RnpvM3p1T0hONnd8fGVufDB8fHx8fA%3D%3D&#x26;auto=format&#x26;fit=crop&#x26;w=400&#x26;q=60\" alt=\"image\" title=\"Temple Title\"></p>\n<h1>::Image Rule</h1>\n<div></div>\n<h1>Inline Html</h1>",
+          "meta": {}
+        }
+      ],
+      "listing": [
+        {
+          "title": "Test Guide",
+          "description": "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.",
+          "author": "Johannes Biermann",
+          "tags": [
+            "museum",
+            "test",
+            "fruty"
+          ],
+          "downloadUrl": "https://github.com/openguideapp/openguideapp-test-guide"
+        }
+      ]
     },
+    "en_US": {
+      "pages": [
+        {
+          "downloadUrl": "https://raw.githubusercontent.com/openguideapp/openguideapp-test-guide/main/content/en_US/guide1.md",
+          "path": "content/en_US/guide1.md",
+          "html": "<p>Hello World 2 !</p>\n<button path=\"home.md\">Back to Home!</button>",
+          "meta": {}
+        },
+        {
+          "downloadUrl": "https://raw.githubusercontent.com/openguideapp/openguideapp-test-guide/main/content/en_US/home.md",
+          "path": "content/en_US/home.md",
+          "html": "<h1>Hello World! en_US</h1>\n<p><button path=\"guide1.md\">To Guide 1!</button></p>\n<p><button path=\"imges.md\">To Images!</button></p>\n<p><button path=\"frontmatter.md\">Back to Home!</button></p>",
+          "meta": {}
+        }
+      ],
+      "listing": []
+    },
+    "none": {
+      "pages": [],
+      "listing": [
+        {
+          "downloadUrl": "https://github.com/openguideapp/openguideapp-test-guide"
+        }
+      ]
+    }
+  },
+  "images": [
     {
-      "downloadUrl": "https://raw.githubusercontent.com/openguideapp/openguideapp-test-guide/main/images.md",
-      "path": "images.md",
-      "html": "<button path=\"home.md\"></button>\n<h1>Images with remote Url</h1>\n<img src=\"https://images.unsplash.com/photo-1696461353431-32c529d4585d?ixlib=rb-4.0.3&#x26;ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDR8RnpvM3p1T0hONnd8fGVufDB8fHx8fA%3D%3D&#x26;auto=format&#x26;fit=crop&#x26;w=400&#x26;q=60\" alt=\"image\" title=\"Temple Title\">\n<div></div>",
-      "meta": []
+      "downloadUrl": "https://raw.githubusercontent.com/openguideapp/openguideapp-test-guide/main/media/images/success.png",
+      "path": "media/images/success.png",
+      "width": 832,
+      "height": 832,
+      "blurHash": "UI8iPgXUD4nf^CR,H;s6jEM|k]xTA5Sl#gx8"
     }
   ],
-  "guideImages": [],
-  "guideMapPaths": []
+  "mapPaths": [],
+  "styles": [
+    // {
+    //   "path": "theme/style.css",
+    //   "downloadUrl": "https://raw.githubusercontent.com/openguideapp/openguideapp-test-guide/main/theme/style.css",
+    //   "style":
+    {
+      "body": {
+        "color": "pink",
+        "fontStyle": "italic",
+        "backgroundColor": "yellow",
+        "textAlign": "center",
+        // "background-color": "black",
+        "whiteSpace": "pre-wrap",
+        "white-space": "pre-wrap",
+
+        "border": "1px solid black",
+        "borderLeftColor": "red",
+      },
+      "a": {
+        "color": "green"
+      },
+      "#red": {
+        "color": "red"
+      },
+      ".red": {
+        "color": "red"
+      }
+    }
+    // }
+  ]
 }

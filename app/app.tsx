@@ -16,23 +16,25 @@ if (__DEV__) {
   // to only execute this in development.
   require("./devtools/ReactotronConfig.ts")
 }
+import React from "react"
+import { ViewStyle } from "react-native"
+import { GestureHandlerRootView } from "react-native-gesture-handler"
+import { RenderHTMLConfigProvider, TRenderEngineProvider } from "react-native-render-html"
+import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context"
+import { useFonts } from "expo-font"
+import * as Linking from "expo-linking"
+import { IconoirProvider } from "iconoir-react-native"
+
 import "./i18n"
 import "./utils/ignoreWarnings"
-import { useFonts } from "expo-font"
-import React from "react"
-import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context"
-import * as Linking from "expo-linking"
-import { useInitialRootStore } from "./models"
-import { AppNavigator, useNavigationPersistence } from "./navigators"
+
 import { ErrorBoundary } from "./screens/ErrorScreen/ErrorBoundary"
 import * as storage from "./utils/storage"
-import { customFontsToLoad } from "./theme"
 import Config from "./config"
-import { GestureHandlerRootView } from "react-native-gesture-handler"
-import { ViewStyle } from "react-native"
-import { TRenderEngineProvider, RenderHTMLConfigProvider } from "react-native-render-html"
+import { useInitialRootStore } from "./models"
+import { AppNavigator, useNavigationPersistence } from "./navigators"
 import { customHTMLElementModels, customRenderers, renderersProps } from "./renderer"
-import { IconoirProvider } from "iconoir-react-native"
+import { customFontsToLoad } from "./theme"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
@@ -103,24 +105,24 @@ function App(props: AppProps) {
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <ErrorBoundary catchErrors={Config.catchErrors}>
         <GestureHandlerRootView style={$container}>
-          <TRenderEngineProvider customHTMLElementModels={customHTMLElementModels}>
-            <RenderHTMLConfigProvider renderers={customRenderers} renderersProps={renderersProps}>
-              <IconoirProvider
-                iconProps={{
-                  color: "#181014",
-                  strokeWidth: 2,
-                  width: "30",
-                  height: "30",
-                }}
-              >
-                <AppNavigator
-                  linking={linking}
-                  initialState={initialNavigationState}
-                  onStateChange={onNavigationStateChange}
-                />
-              </IconoirProvider>
-            </RenderHTMLConfigProvider>
-          </TRenderEngineProvider>
+          {/* <TRenderEngineProvider customHTMLElementModels={customHTMLElementModels} >
+            <RenderHTMLConfigProvider renderers={customRenderers} renderersProps={renderersProps} > */}
+          <IconoirProvider
+            iconProps={{
+              color: "#181014",
+              strokeWidth: 2,
+              width: "30",
+              height: "30",
+            }}
+          >
+            <AppNavigator
+              linking={linking}
+              initialState={initialNavigationState}
+              onStateChange={onNavigationStateChange}
+            />
+          </IconoirProvider>
+          {/* </RenderHTMLConfigProvider>
+          </TRenderEngineProvider> */}
         </GestureHandlerRootView>
       </ErrorBoundary>
     </SafeAreaProvider>

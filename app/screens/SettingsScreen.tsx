@@ -11,7 +11,7 @@ interface SettingsScreenProps extends AppStackScreenProps<"Settings"> {}
 export const SettingsScreen: FC<SettingsScreenProps> = observer(function SettingsScreen(_props) {
   const { navigation } = _props
 
-  const { userSettings } = useStores()
+  const { userSettings, guideStore } = useStores()
 
   function goNext() {
     // navigation.navigate("Demo", { screen: "DemoShowroom", params: {} })
@@ -46,7 +46,10 @@ export const SettingsScreen: FC<SettingsScreenProps> = observer(function Setting
         preset="reversed"
         // tx="welcomeScreen.letsGo"
         text="Set Lng to de"
-        onPress={() => userSettings.setProp("lng", "de")}
+        onPress={() => {
+          userSettings.setProp("lng", "de")
+          guideStore.fetchGuide("de")
+        }}
       />
 
       <Button
@@ -54,7 +57,10 @@ export const SettingsScreen: FC<SettingsScreenProps> = observer(function Setting
         preset="reversed"
         // tx="welcomeScreen.letsGo"
         text="Set Lng to en"
-        onPress={() => userSettings.setProp("lng", "en")}
+        onPress={() => {
+          userSettings.setProp("lng", "en")
+          guideStore.fetchGuide("en")
+        }}
       />
     </Screen>
   )

@@ -39,7 +39,7 @@ export const GuidePageScreen: FC<GuidePageScreenProps> = observer(function Guide
   return (
     <Screen style={$root} preset="scroll">
       <Text text="guidePage" />
-      <Renderer htmlSource={page.html} />
+      <Renderer htmlSource={page.html} styles={guideStore.styles} />
     </Screen>
   )
 })

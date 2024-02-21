@@ -1,4 +1,5 @@
 import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
+
 import { withSetPropAction } from "./helpers/withSetPropAction"
 
 /**
@@ -10,10 +11,16 @@ export const GuidePageModel = types
     downloadUrl: "",
     path: "",
     html: "",
-    meta: types.array(types.string),
+    meta: types.optional(types.frozen(), {}),
+    // meta: types.optional(types.array(types.frozen()), []),
+    // meta: types.map(types.map(types.string)), // TODO: this should be a map of string to string
   })
   .actions(withSetPropAction)
-  .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
+  .views((self) => ({
+    get isMetaSet() {
+      return self.meta.length > 0;
+    }
+  })) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
 
 export interface GuidePage extends Instance<typeof GuidePageModel> { }

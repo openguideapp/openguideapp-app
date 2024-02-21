@@ -1,39 +1,89 @@
 import * as React from "react"
-import { Button, StyleProp, TextStyle, View, ViewStyle, useWindowDimensions } from "react-native"
-import { observer } from "mobx-react-lite"
-import { colors, typography } from "app/theme"
+import { Button, StyleProp, TextStyle, useWindowDimensions, View, ViewStyle } from "react-native"
+import {
+  MixedStyleDeclaration,
+  RenderHTMLConfigProvider,
+  RenderHTMLSource,
+  TRenderEngineProvider,
+} from "react-native-render-html"
 import { Text } from "app/components/Text"
-import { RenderHTMLSource } from "react-native-render-html"
+import { colors, typography } from "app/theme"
+import { observer } from "mobx-react-lite"
+
+import { customHTMLElementModels } from "./CustomHtmlElementModels"
+import { customRenderers, renderersProps } from "./CustomRenderers"
+import MemoHTMLRenderConfigProviderProps from "./MemoHTMLRenderConfigProvider"
 
 export interface RendererProps {
   /**
    * An optional style override useful for padding & margin.
    */
-  // style?: StyleProp<ViewStyle>
+  styles?: any
   htmlSource: string
+  // baseStyle?: MixedStyleDeclaration
+  // idsStyles?: Record<string, MixedStyleDeclaration>
+  // classesStyles?: Record<string, MixedStyleDeclaration>
+  // tagsStyles?: Record<string, MixedStyleDeclaration>
 }
 
 /**
  * Describe your component here
  */
 export const Renderer = observer(function Renderer(props: RendererProps) {
-  const { style } = props
-  const $styles = [$container, style]
-
+  const { styles, htmlSource } = props
   const { width } = useWindowDimensions()
-
-  const { htmlSource } = props
   const source = { html: htmlSource }
+  console.log("styles", styles)
 
-  return <RenderHTMLSource contentWidth={width} source={source} />
+  const stylesObject = styles[0]
+  // Assuming `styles` is an object where keys are selectors (e.g., ".class", "#id", "tag")
+  // and values are style objects.
+
+  // TODO: OMPTIMIZE!!!! https://stackoverflow.com/questions/68966120/react-native-render-html-you-seem-to-update-the-x-prop-of-the-y-component-in-s
+  const idsStyles = React.useMemo(
+    () =>
+      Object.keys(stylesObject)
+        .filter((key) => key.startsWith("#"))
+        .reduce((acc, key) => ({ ...acc, [key.substring(1)]: stylesObject[key] }), {}),
+    [stylesObject],
+  )
+
+  const classesStyles = React.useMemo(
+    () =>
+      Object.keys(stylesObject)
+        .filter((key) => key.startsWith("."))
+        .reduce((acc, key) => ({ ...acc, [key.substring(1)]: stylesObject[key] }), {}),
+    [stylesObject],
+  )
+
+  const tagsStyles = React.useMemo(
+    () =>
+      Object.keys(stylesObject)
+        .filter((key) => !key.startsWith(".") && !key.startsWith("#"))
+        .reduce((acc, key) => ({ ...acc, [key]: stylesObject[key] }), {}),
+    [stylesObject],
+  )
+
+  console.log("idsStyles", idsStyles)
+  // console.log("classesStyles", classesStyles)
+  // console.log("tagsStyles", tagsStyles)
+
+  return (
+    // <TRenderEngineProvider
+    //   customHTMLElementModels={customHTMLElementModels}
+    //   idsStyles={idsStyles}
+    //   classesStyles={classesStyles}
+    //   tagsStyles={tagsStyles}
+    // >
+    //   <RenderHTMLConfigProvider renderers={customRenderers} renderersProps={{}}>
+    <MemoHTMLRenderConfigProviderProps
+      idsStyles={idsStyles}
+      classesStyles={classesStyles}
+      tagsStyles={tagsStyles}
+    >
+      <RenderHTMLSource contentWidth={width} source={source} />
+    </MemoHTMLRenderConfigProviderProps>
+    //   </RenderHTMLConfigProvider>
+    // </TRenderEngineProvider>
+  )
 })
-
-const $container: ViewStyle = {
-  justifyContent: "center",
-}
-
-const $text: TextStyle = {
-  fontFamily: typography.primary.normal,
-  fontSize: 14,
-  color: colors.palette.primary500,
-}
