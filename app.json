@@ -22,9 +22,7 @@
       "fallbackToCacheTimeout": 0
     },
     "jsEngine": "hermes",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "android": {
       "icon": "./assets/images/app-icon-android-legacy.png",
       "package": "com.openguideapp",
@@ -65,13 +63,16 @@
         {
           "ios": {
             "newArchEnabled": false,
-            "flipper": false
+            "flipper": false,
+            "infoPlist": {
+              "UIBackgroundModes": ["audio"]
+            }
           },
           "android": {
             "newArchEnabled": false
           }
         }
-      ], 
+      ],
       "expo-font"
     ],
     "experiments": {
