@@ -9,9 +9,10 @@ import {
   View,
   ViewStyle,
 } from "react-native"
+// import Carousel, { ICarouselInstance } from "react-native-reanimated-carousel"
+import { Carousel } from "react-native-basic-carousel"
 import FastImage from "react-native-fast-image"
 import Animated, { useSharedValue, withSpring } from "react-native-reanimated"
-import Carousel, { ICarouselInstance } from "react-native-reanimated-carousel"
 import { useNavigation } from "@react-navigation/native"
 import {
   AutoImage,
@@ -51,7 +52,7 @@ export const GuideListingCard = observer(function GuideListingCard({
   const [isVertical, setIsVertical] = React.useState(false)
   const [isFast, setIsFast] = React.useState(false)
   const [isAutoPlay, setIsAutoPlay] = React.useState(false)
-  const ref = React.useRef<ICarouselInstance>(null)
+  // const ref = React.useRef<ICarouselInstance>(null)
   const progressValue = useSharedValue<number>(0)
   const { guideStore } = useStores()
   const [guideUrl, setGuideUrl] = React.useState<string>("")
@@ -118,7 +119,7 @@ export const GuideListingCard = observer(function GuideListingCard({
     return (
       <>
         <View onLayout={onLayout}>
-          <Carousel
+          {/* <Carousel
             {...baseOptions}
             loop
             enabled // Default is true, just for demo
@@ -158,6 +159,25 @@ export const GuideListingCard = observer(function GuideListingCard({
             index={0}
             backgroundColor={""}
             colors={["#000", "#000", "#000", "#000"]}
+          /> */}
+
+          <Carousel
+            data={data}
+            renderItem={({ item, index }) => (
+              <View>
+                <FastImage
+                  source={{ uri: guideListing.thumbnails[index] }}
+                  style={{ width, height: width / 1.5 }}
+                  // style={{ width: 290, height: "100%" }}
+                  resizeMode={FastImage.resizeMode.cover}
+                />
+              </View>
+            )}
+            itemWidth={width}
+            // onSnapItem={(item) => console.log(item)}
+            pagination
+            paginationType="circle"
+            autoplay
           />
 
           <Text style={$heading} size="xs">
