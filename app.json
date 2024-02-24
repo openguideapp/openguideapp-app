@@ -11,7 +11,7 @@
     "splash": {
       "image": "./assets/images/splash-logo-all.png",
       "resizeMode": "contain",
-      "backgroundColor": "#eacea5"
+      "backgroundColor": "#F4F2F1"
     },
     "extra": {
       "eas": {
@@ -22,7 +22,9 @@
       "fallbackToCacheTimeout": 0
     },
     "jsEngine": "hermes",
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "android": {
       "icon": "./assets/images/app-icon-android-legacy.png",
       "package": "com.openguideapp",
@@ -33,7 +35,7 @@
       "splash": {
         "image": "./assets/images/splash-logo-android-universal.png",
         "resizeMode": "contain",
-        "backgroundColor": "#eacea5"
+        "backgroundColor": "#F4F2F1"
       }
     },
     "ios": {
@@ -44,7 +46,7 @@
         "image": "./assets/images/splash-logo-ios-mobile.png",
         "tabletImage": "./assets/images/splash-logo-ios-tablet.png",
         "resizeMode": "contain",
-        "backgroundColor": "#eacea5"
+        "backgroundColor": "#F4F2F1"
       }
     },
     "web": {
@@ -52,7 +54,7 @@
       "splash": {
         "image": "./assets/images/splash-logo-web.png",
         "resizeMode": "contain",
-        "backgroundColor": "#eacea5"
+        "backgroundColor": "#F4F2F1"
       },
       "bundler": "metro"
     },
@@ -65,7 +67,9 @@
             "newArchEnabled": false,
             "flipper": false,
             "infoPlist": {
-              "UIBackgroundModes": ["audio"]
+              "UIBackgroundModes": [
+                "audio"
+              ]
             }
           },
           "android": {

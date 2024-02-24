@@ -15,7 +15,6 @@ import {
   View,
   ViewStyle,
 } from "react-native"
-import AnimatedDotCarousel from "react-native-animated-dots-carousel"
 import FastImage from "react-native-fast-image"
 import Animated, {
   Extrapolate,
@@ -25,7 +24,6 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated"
-import Carousel, { ICarouselInstance } from "react-native-reanimated-carousel"
 import { ContentStyle } from "@shopify/flash-list"
 import {
   AutoImage,

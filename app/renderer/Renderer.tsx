@@ -10,8 +10,8 @@ import { Text } from "app/components/Text"
 import { colors, typography } from "app/theme"
 import { observer } from "mobx-react-lite"
 
+import { customRenderers, renderersProps } from "./custom-renderer/CustomRenderers"
 import { customHTMLElementModels } from "./CustomHtmlElementModels"
-import { customRenderers, renderersProps } from "./CustomRenderers"
 import MemoHTMLRenderConfigProviderProps from "./MemoHTMLRenderConfigProvider"
 
 export interface RendererProps {
@@ -33,52 +33,49 @@ export const Renderer = observer(function Renderer(props: RendererProps) {
   const { styles, htmlSource } = props
   const { width } = useWindowDimensions()
   const source = { html: htmlSource }
-  console.log("styles", styles)
 
   const stylesObject = styles[0]
   // Assuming `styles` is an object where keys are selectors (e.g., ".class", "#id", "tag")
   // and values are style objects.
 
   // TODO: OMPTIMIZE!!!! https://stackoverflow.com/questions/68966120/react-native-render-html-you-seem-to-update-the-x-prop-of-the-y-component-in-s
-  const idsStyles = React.useMemo(
-    () =>
-      Object.keys(stylesObject)
-        .filter((key) => key.startsWith("#"))
-        .reduce((acc, key) => ({ ...acc, [key.substring(1)]: stylesObject[key] }), {}),
-    [stylesObject],
-  )
+  // const idsStyles = React.useMemo(
+  //   () =>
+  //     Object.keys(stylesObject)
+  //       .filter((key) => key.startsWith("#"))
+  //       .reduce((acc, key) => ({ ...acc, [key.substring(1)]: stylesObject[key] }), {}),
+  //   [stylesObject],
+  // )
 
-  const classesStyles = React.useMemo(
-    () =>
-      Object.keys(stylesObject)
-        .filter((key) => key.startsWith("."))
-        .reduce((acc, key) => ({ ...acc, [key.substring(1)]: stylesObject[key] }), {}),
-    [stylesObject],
-  )
+  // const classesStyles = React.useMemo(
+  //   () =>
+  //     Object.keys(stylesObject)
+  //       .filter((key) => key.startsWith("."))
+  //       .reduce((acc, key) => ({ ...acc, [key.substring(1)]: stylesObject[key] }), {}),
+  //   [stylesObject],
+  // )
 
-  const tagsStyles = React.useMemo(
-    () =>
-      Object.keys(stylesObject)
-        .filter((key) => !key.startsWith(".") && !key.startsWith("#"))
-        .reduce((acc, key) => ({ ...acc, [key]: stylesObject[key] }), {}),
-    [stylesObject],
-  )
+  // const tagsStyles = React.useMemo(
+  //   () =>
+  //     Object.keys(stylesObject)
+  //       .filter((key) => !key.startsWith(".") && !key.startsWith("#"))
+  //       .reduce((acc, key) => ({ ...acc, [key]: stylesObject[key] }), {}),
+  //   [stylesObject],
+  // )
 
-  console.log("idsStyles", idsStyles)
-  // console.log("classesStyles", classesStyles)
-  // console.log("tagsStyles", tagsStyles)
+  const tagsStyles = styles[0].style
 
   return (
     // <TRenderEngineProvider
     //   customHTMLElementModels={customHTMLElementModels}
     //   idsStyles={idsStyles}
     //   classesStyles={classesStyles}
-    //   tagsStyles={tagsStyles}
+    // tagsStyles={tagsStyles}
     // >
     //   <RenderHTMLConfigProvider renderers={customRenderers} renderersProps={{}}>
     <MemoHTMLRenderConfigProviderProps
-      idsStyles={idsStyles}
-      classesStyles={classesStyles}
+      // idsStyles={idsStyles}
+      // classesStyles={classesStyles}
       tagsStyles={tagsStyles}
     >
       <RenderHTMLSource contentWidth={width} source={source} />

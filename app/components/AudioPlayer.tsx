@@ -8,29 +8,39 @@ import { Forward, Pause, Play, Rewind } from "iconoir-react-native"
 import { observer } from "mobx-react-lite"
 
 export interface AudioPlayerProps {
-  track: any // Ideally, define a more detailed type for your track object
+  uri: string // Ideally, define a more detailed type for your track object
   style?: StyleProp<ViewStyle>
 }
 
-export const AudioPlayer = observer(function AudioPlayer({ style, track }: AudioPlayerProps) {
+export const AudioPlayer = observer(function AudioPlayer({ style, uri }: AudioPlayerProps) {
   const [sound, setSound] = useState<Audio.Sound | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [progress, setProgress] = useState<number>(0)
   const [duration, setDuration] = useState<number>(0)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    // Prepare audio session
-    Audio.setAudioModeAsync({
-      playsInSilentModeIOS: true,
-      staysActiveInBackground: true,
-    })
+    const init = async () => {
+      // Prepare audio session
+      Audio.setAudioModeAsync({
+        playsInSilentModeIOS: true,
+        staysActiveInBackground: true,
+      })
+      const sound = new Audio.Sound()
+      setSound(sound)
+      await sound.loadAsync({
+        uri,
+      })
+      setIsLoading(false)
+    }
 
+    if (uri) init()
     return sound
       ? () => {
           sound.unloadAsync()
         }
       : undefined
-  }, [sound])
+  }, [])
 
   useEffect(() => {
     if (sound) {
@@ -53,11 +63,11 @@ export const AudioPlayer = observer(function AudioPlayer({ style, track }: Audio
 
   const playSound = async () => {
     console.log("Loading Sound")
-    const sound = new Audio.Sound()
-    await sound.loadAsync({
-      uri: "https://github.com/openguideapp/openguideapp-test-guide/raw/main/media/audio/podcast.mp3",
-    })
-    setSound(sound)
+    if (isLoading || !sound) {
+      // TODO: Implement feedback for user eg. spinner
+      console.log("Still Loading ...")
+      return
+    }
     setIsPlaying(true)
     sound.playAsync()
     console.log("Playing Sound")

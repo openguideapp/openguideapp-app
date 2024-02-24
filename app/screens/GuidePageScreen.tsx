@@ -11,13 +11,10 @@ export interface GuidePageScreenProps extends AppStackScreenProps<"GuidePage"> {
 export const GuidePageScreen: FC<GuidePageScreenProps> = observer(function GuidePageScreen(props) {
   const { guideStore, userSettings } = useStores()
   const { navigation } = props
-  console.log("GuidePageScreen props?.route?.params", props?.route?.params)
   const { path } = props?.route?.params
 
   const [currentLanguage, setCurrentLanguage] = useState("")
   const [currentPath, setCurrentPath] = useState(path)
-  // setCurrentLanguage(userSettings.lng) // Set the initial language
-  console.log("GuidePageScreen lng", currentLanguage)
 
   useEffect(() => {
     if (currentLanguage !== userSettings.lng) {
@@ -28,7 +25,6 @@ export const GuidePageScreen: FC<GuidePageScreenProps> = observer(function Guide
       const newPath: string = paths
         .map((segment: string, index: number): string => (index === 1 ? userSettings.lng : segment))
         .join("/")
-      console.log("path after replace", newPath)
       setCurrentPath(newPath) // Update the path
       setCurrentLanguage(userSettings.lng) // Update the language
     }

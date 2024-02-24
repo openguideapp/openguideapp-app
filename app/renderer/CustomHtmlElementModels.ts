@@ -5,4 +5,12 @@ export const customHTMLElementModels = {
     tagName: "button",
     contentModel: HTMLContentModel.mixed,
   }),
+  audio: HTMLElementModel.fromCustomModel({
+    tagName: "audio",
+    contentModel: HTMLContentModel.block,
+  }),
+  video: HTMLElementModel.fromCustomModel({
+    tagName: "video",
+    contentModel: HTMLContentModel.block,
+  }),
 }

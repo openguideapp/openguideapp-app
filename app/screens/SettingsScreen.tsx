@@ -74,7 +74,11 @@ export const SettingsScreen: FC<SettingsScreenProps> = observer(function Setting
       />
 
       <AudioPlayer track={track1} />
-      <VideoPlayer />
+      <VideoPlayer
+        uri={
+          "https://github.com/openguideapp/openguideapp-test-guide/raw/main/media/video/museum2.mp4"
+        }
+      />
     </Screen>
   )
 })
