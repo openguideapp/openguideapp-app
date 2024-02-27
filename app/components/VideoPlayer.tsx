@@ -138,6 +138,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 20,
   },
+  paddingContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 20,
+    padding: 5,
+  },
   slider: {
     flex: 1, // Take up all available space
     marginHorizontal: 10, // Space between text and slider

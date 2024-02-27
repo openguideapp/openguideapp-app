@@ -1,8 +1,8 @@
 import {
-  ConfigPlugin,
-  withStringsXml,
   AndroidConfig,
+  ConfigPlugin,
   withAndroidStyles,
+  withStringsXml,
 } from "expo/config-plugins"
 
 /**

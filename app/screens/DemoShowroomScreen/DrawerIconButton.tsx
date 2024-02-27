@@ -1,7 +1,8 @@
 import React from "react"
 import { Pressable, PressableProps, ViewStyle } from "react-native"
-import Animated, { interpolate, interpolateColor, useAnimatedStyle } from "react-native-reanimated"
 import { useDrawerProgress } from "react-native-drawer-layout"
+import Animated, { interpolate, interpolateColor, useAnimatedStyle } from "react-native-reanimated"
+
 import { isRTL } from "../../i18n"
 import { colors, spacing } from "../../theme"
 

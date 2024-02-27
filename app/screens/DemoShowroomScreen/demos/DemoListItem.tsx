@@ -1,10 +1,11 @@
 /* eslint-disable react/jsx-key, react-native/no-inline-styles */
 import React from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
+
 import { Icon, ListItem, ListView, Text } from "../../../components"
 import { colors, spacing } from "../../../theme"
-import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
+import { Demo } from "../DemoShowroomScreen"
 import { DemoUseCase } from "../DemoUseCase"
 
 const listData =

@@ -6,10 +6,12 @@
  * documentation for more details.
  */
 import { ApiResponse, ApisauceInstance, create } from "apisauce"
+
 import Config from "../../config"
-import { GeneralApiProblem, getGeneralApiProblem } from "./apiProblem"
-import type { ApiConfig, ApiFeedResponse } from "./api.types"
 import type { EpisodeSnapshotIn } from "../../models/Episode"
+
+import type { ApiConfig, ApiFeedResponse } from "./api.types"
+import { GeneralApiProblem, getGeneralApiProblem } from "./apiProblem"
 
 /**
  * Configuring the apisauce instance.

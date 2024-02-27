@@ -1,10 +1,11 @@
 /* eslint-disable react/jsx-key, react-native/no-inline-styles */
 import React from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
+
 import { AutoImage, Text } from "../../../components"
 import { colors, spacing } from "../../../theme"
-import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
+import { Demo } from "../DemoShowroomScreen"
 import { DemoUseCase } from "../DemoUseCase"
 
 const $imageContainer: ViewStyle = {
@@ -75,7 +76,11 @@ export const DemoAutoImage: Demo = {
           text="<Image />"
           size="xxs"
           weight="bold"
-          style={{ flexBasis: "33.3333%", textAlign: "center", color: colors.palette.secondary400 }}
+          style={{
+            flexBasis: "33.3333%",
+            textAlign: "center",
+            color: colors.palette.secondary400,
+          }}
         />
         <Text
           text="<AutoImage />"
@@ -169,7 +174,11 @@ export const DemoAutoImage: Demo = {
           text="<Image />"
           size="xxs"
           weight="bold"
-          style={{ flexBasis: "33.3333%", textAlign: "center", color: colors.palette.secondary400 }}
+          style={{
+            flexBasis: "33.3333%",
+            textAlign: "center",
+            color: colors.palette.secondary400,
+          }}
         />
         <Text
           text="<AutoImage />"

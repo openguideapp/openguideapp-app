@@ -1,10 +1,11 @@
 /* eslint-disable react/jsx-key, react-native/no-inline-styles */
 import React from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
+
 import { Header, Icon } from "../../../components"
 import { colors } from "../../../theme"
-import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
+import { Demo } from "../DemoShowroomScreen"
 import { DemoUseCase } from "../DemoUseCase"
 
 const $rightAlignTitle: TextStyle = {

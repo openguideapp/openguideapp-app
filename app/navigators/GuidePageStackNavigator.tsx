@@ -9,7 +9,7 @@ export type GuidePageStackNavigatorParamList = {
 const Stack = createNativeStackNavigator<GuidePageStackNavigatorParamList>()
 export const GuidePageStackNavigator = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="GuidePage" component={GuidePageScreen} />
     </Stack.Navigator>
   )

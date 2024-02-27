@@ -1,5 +1,6 @@
 import * as changeCase from "change-case";
 import { toJSON } from "css-convert-json";
+import toml from "toml"
 
 import { githubApi, GithubEntry } from "../api/githubApi";
 import { GuideStyle } from "../types/data-types";
@@ -28,30 +29,39 @@ function transformStyleToPascalCaseIfAllowed(simplifiedCSS: { [key: string]: { [
     return result;
 }
 
-
 async function guideStyleBuilder(entries: GithubEntry[]): Promise<GuideStyle[]> {
     const styles: GuideStyle[] = [];
 
     for (const entry of entries) {
         try {
-            const cssSource = await githubApi.downloadString(entry.uri);
-            const parsedCSS = toJSON(cssSource)?.children;
+            const tomlSource = await githubApi.downloadString(entry.uri);
+            const parsedToml = toml.parse(tomlSource);
 
-            const simplifiedCSS: {
+            const parsedStyles: {
                 [key: string]: { [key: string]: string },
             } = {};
 
-            Object.keys(parsedCSS).forEach(key => {
-                simplifiedCSS[key] = { ...parsedCSS[key]?.attributes }
-            });
+            // Iterate over each key in the parsed TOML data using a safer approach
+            for (const key in parsedToml) {
+                // Use Object.hasOwnProperty.call for a safer property check
+                if (Object.hasOwnProperty.call(parsedToml, key)) {
+                    // Ensure each style key maps to an object with string key-value pairs
+                    parsedStyles[key] = parsedToml[key];
+                }
+            }
 
-            const transformedCSS = transformStyleToPascalCaseIfAllowed(simplifiedCSS, allowedStrings);
+
+            Object.keys(parsedToml).forEach(key => {
+                parsedStyles[key] = { ...parsedToml[key]?.attributes }
+            });
 
             const guideStyle: GuideStyle = {
                 path: entry.path,
                 downloadUrl: entry.uri,
-                style: { ...transformedCSS },
+                styles: parsedToml,
             }
+
+            console.log("hallo", guideStyle)
 
             styles.push(guideStyle);
 
@@ -65,5 +75,42 @@ async function guideStyleBuilder(entries: GithubEntry[]): Promise<GuideStyle[]> 
 }
 
 export default guideStyleBuilder
+
+// async function guideStyleBuilder(entries: GithubEntry[]): Promise<GuideStyle[]> {
+//     const styles: GuideStyle[] = [];
+
+//     for (const entry of entries) {
+//         try {
+//             const cssSource = await githubApi.downloadString(entry.uri);
+//             const parsedCSS = toJSON(cssSource)?.children;
+
+//             const simplifiedCSS: {
+//                 [key: string]: { [key: string]: string },
+//             } = {};
+
+//             Object.keys(parsedCSS).forEach(key => {
+//                 simplifiedCSS[key] = { ...parsedCSS[key]?.attributes }
+//             });
+
+//             const transformedCSS = transformStyleToPascalCaseIfAllowed(simplifiedCSS, allowedStrings);
+
+//             const guideStyle: GuideStyle = {
+//                 path: entry.path,
+//                 downloadUrl: entry.uri,
+//                 style: { ...transformedCSS },
+//             }
+
+//             styles.push(guideStyle);
+
+//         } catch (error) {
+//             console.error(`Failed to process URL ${entry.uri}:`, error);
+//             // Handle error, possibly by continuing to the next URL
+//         }
+//     }
+
+//     return styles;
+// }
+
+// export default guideStyleBuilder
 
 

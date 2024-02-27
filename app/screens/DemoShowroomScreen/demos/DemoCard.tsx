@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-key, react-native/no-inline-styles */
 import React from "react"
+
 import { AutoImage, Button, Card, Icon } from "../../../components"
 import { colors, spacing } from "../../../theme"
-import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
+import { Demo } from "../DemoShowroomScreen"
 import { DemoUseCase } from "../DemoUseCase"
 
 export const DemoCard: Demo = {

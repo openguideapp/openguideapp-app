@@ -1,7 +1,7 @@
 import { fromMarkdown } from "mdast-util-from-markdown";
+import  flatMap  from "unist-util-flatmap";
 // import { visit } from "unist-util-visit";
 import { visitParents } from "unist-util-visit-parents";
-import  flatMap  from "unist-util-flatmap";
 
 
 const tree = fromMarkdown(`![Image Text](https://example.com/image.png)

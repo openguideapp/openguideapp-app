@@ -1,5 +1,5 @@
 import React from "react"
-import { View, Text, FlatList, TouchableOpacity, StyleSheet } from "react-native"
+import { FlatList, StyleSheet,Text, TouchableOpacity, View } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 
 // Assuming GuideItem is a type that includes at least an id and title
@@ -37,9 +37,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   itemContainer: {
-    padding: 10,
-    borderBottomWidth: 1,
     borderBottomColor: "#e0e0e0",
+    borderBottomWidth: 1,
+    padding: 10,
   },
   itemTitle: {
     fontSize: 16,

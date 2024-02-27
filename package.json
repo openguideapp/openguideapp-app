@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "@expo-google-fonts/space-grotesk": "^0.2.2",
+    "@expo-google-fonts/space-mono": "^0.2.3",
     "@expo/config": "^8.5.4",
     "@expo/metro-runtime": "^3.1.1",
     "@iarna/toml": "^2.2.5",
@@ -49,6 +50,7 @@
     "change-case": "^5.4.3",
     "css-convert-json": "^1.1.0",
     "date-fns": "^2.30.0",
+    "deepmerge": "^4.3.1",
     "eslint-plugin-import": "^2.29.1",
     "expo": "~50.0.7",
     "expo-application": "~5.8.3",
@@ -77,6 +79,7 @@
     "react-native-fast-image": "^8.6.3",
     "react-native-gesture-handler": "~2.14.0",
     "react-native-logs": "^5.1.0",
+    "react-native-maps": "^1.10.3",
     "react-native-mmkv": "^2.11.0",
     "react-native-reanimated": "~3.6.0",
     "react-native-render-html": "^6.3.4",

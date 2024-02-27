@@ -7,6 +7,7 @@ import {
   TRenderEngineProvider,
 } from "react-native-render-html"
 import { Text } from "app/components/Text"
+import { useStores } from "app/models"
 import { colors, typography } from "app/theme"
 import { observer } from "mobx-react-lite"
 
@@ -30,57 +31,24 @@ export interface RendererProps {
  * Describe your component here
  */
 export const Renderer = observer(function Renderer(props: RendererProps) {
+  const { guideStore } = useStores()
   const { styles, htmlSource } = props
   const { width } = useWindowDimensions()
   const source = { html: htmlSource }
 
-  const stylesObject = styles[0]
-  // Assuming `styles` is an object where keys are selectors (e.g., ".class", "#id", "tag")
-  // and values are style objects.
+  const tagsStyles = guideStore.getTagsStyles()
+  const componentStyles = guideStore.getComponentStyles()
 
-  // TODO: OMPTIMIZE!!!! https://stackoverflow.com/questions/68966120/react-native-render-html-you-seem-to-update-the-x-prop-of-the-y-component-in-s
-  // const idsStyles = React.useMemo(
-  //   () =>
-  //     Object.keys(stylesObject)
-  //       .filter((key) => key.startsWith("#"))
-  //       .reduce((acc, key) => ({ ...acc, [key.substring(1)]: stylesObject[key] }), {}),
-  //   [stylesObject],
-  // )
-
-  // const classesStyles = React.useMemo(
-  //   () =>
-  //     Object.keys(stylesObject)
-  //       .filter((key) => key.startsWith("."))
-  //       .reduce((acc, key) => ({ ...acc, [key.substring(1)]: stylesObject[key] }), {}),
-  //   [stylesObject],
-  // )
-
-  // const tagsStyles = React.useMemo(
-  //   () =>
-  //     Object.keys(stylesObject)
-  //       .filter((key) => !key.startsWith(".") && !key.startsWith("#"))
-  //       .reduce((acc, key) => ({ ...acc, [key]: stylesObject[key] }), {}),
-  //   [stylesObject],
-  // )
-
-  const tagsStyles = styles[0].style
+  console.log("tagstyles", tagsStyles)
 
   return (
-    // <TRenderEngineProvider
-    //   customHTMLElementModels={customHTMLElementModels}
-    //   idsStyles={idsStyles}
-    //   classesStyles={classesStyles}
-    // tagsStyles={tagsStyles}
-    // >
-    //   <RenderHTMLConfigProvider renderers={customRenderers} renderersProps={{}}>
     <MemoHTMLRenderConfigProviderProps
       // idsStyles={idsStyles}
       // classesStyles={classesStyles}
+      componentStyles={componentStyles}
       tagsStyles={tagsStyles}
     >
       <RenderHTMLSource contentWidth={width} source={source} />
     </MemoHTMLRenderConfigProviderProps>
-    //   </RenderHTMLConfigProvider>
-    // </TRenderEngineProvider>
   )
 })

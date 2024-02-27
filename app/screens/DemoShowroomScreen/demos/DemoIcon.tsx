@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-key */
 import React from "react"
 import { ImageStyle, TextStyle, View, ViewStyle } from "react-native"
+
 import { Icon, iconRegistry, IconTypes, Text } from "../../../components"
 import { colors, spacing } from "../../../theme"
 import { Demo } from "../DemoShowroomScreen"

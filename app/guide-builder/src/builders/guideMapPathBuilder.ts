@@ -1,5 +1,5 @@
+import { githubApi,GithubEntry } from "../api/githubApi";
 import { GuideMapPath } from '../types/data-types';
-import { GithubEntry, githubApi } from "../api/githubApi";
 
 async function guideMapPathBuilder(entries: GithubEntry[]): Promise<GuideMapPath[]> {
     const paths: GuideMapPath[] = [];
@@ -10,7 +10,7 @@ async function guideMapPathBuilder(entries: GithubEntry[]): Promise<GuideMapPath
             const guidePath: GuideMapPath = {
                 downloadUrl: entry.uri,
                 path: entry.path,
-                coordinates: coordinates,
+                coordinates,
             }
 
             paths.push(guidePath);

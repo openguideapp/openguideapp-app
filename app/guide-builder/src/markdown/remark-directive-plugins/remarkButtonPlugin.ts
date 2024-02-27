@@ -45,7 +45,7 @@ export default function remarkButtonPlugin() {
 
                 data.hName = "button";
                 data.hProperties = {
-                    path: path,
+                    path,
                 };
             }
         });

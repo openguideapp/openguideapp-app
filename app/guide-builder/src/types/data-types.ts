@@ -38,10 +38,14 @@ export type GuideLng = {
     listing: GuideListing[],
 };
 
+export type GuideStylesDictionary = {
+    [key: string]: { [key: string]: string | number }
+}
+
 export type GuideStyle = {
     path: string,
     downloadUrl: string,
-    style: { [key: string]: { [key: string]: string }, }
+    styles: GuideStylesDictionary
 };
 
 export type dataTypes = GuideImage | GuidePage | GuideMapPath;

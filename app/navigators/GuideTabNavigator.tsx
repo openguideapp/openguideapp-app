@@ -7,7 +7,7 @@ import { Icon } from "app/components"
 import { translate } from "app/i18n"
 import { GuidePageScreen, GuideSearchScreen, HomeScreen, SettingsScreen } from "app/screens"
 import { colors, spacing, typography } from "app/theme"
-import { DocMagnifyingGlass, FaceId, HomeSimple, Settings } from "iconoir-react-native"
+import { DocMagnifyingGlass, FaceId, HomeSimple, Map, Settings } from "iconoir-react-native"
 
 import {
   GuidePageStackNavigator,

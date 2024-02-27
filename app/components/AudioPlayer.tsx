@@ -1,23 +1,27 @@
 import React, { useEffect, useState } from "react"
-import { StyleSheet, TouchableOpacity, View } from "react-native"
+import { StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native"
+import { MixedStyleDeclaration } from "react-native-render-html"
 import Slider from "@react-native-community/slider"
 import { Text } from "app/components/Text" // Assuming you have this component
 import { colors, typography } from "app/theme" // Assuming these are defined
+import { merge } from "deepmerge"
 import { Audio } from "expo-av"
 import { Forward, Pause, Play, Rewind } from "iconoir-react-native"
 import { observer } from "mobx-react-lite"
 
 export interface AudioPlayerProps {
-  uri: string // Ideally, define a more detailed type for your track object
-  style?: StyleProp<ViewStyle>
+  uri: string
+  customStyles?: Record<string, MixedStyleDeclaration>
 }
 
-export const AudioPlayer = observer(function AudioPlayer({ style, uri }: AudioPlayerProps) {
+export const AudioPlayer = observer(function AudioPlayer({ customStyles, uri }: AudioPlayerProps) {
   const [sound, setSound] = useState<Audio.Sound | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [progress, setProgress] = useState<number>(0)
   const [duration, setDuration] = useState<number>(0)
   const [isLoading, setIsLoading] = useState(true)
+
+  console.log(customStyles)
 
   useEffect(() => {
     const init = async () => {
@@ -108,12 +112,12 @@ export const AudioPlayer = observer(function AudioPlayer({ style, uri }: AudioPl
   }
 
   return (
-    <View style={[styles.paddingContainer, style]}>
-      <View style={[styles.colorContainer, style]}>
-        <View style={styles.timeContainer}>
-          <Text style={styles.timeText}>{formatTime(progress)}</Text>
+    <View style={[$audioPaddingContainer, customStyles]}>
+      <View style={[$audioColorContainer, customStyles?.audioColorContainer]}>
+        <View style={$audioTimeContainer}>
+          <Text style={$audioTimeText}>{formatTime(progress)}</Text>
           <Slider
-            style={styles.slider}
+            style={$audioSlider}
             maximumTrackTintColor={colors.palette.primary100}
             minimumTrackTintColor={colors.palette.primary400}
             thumbTintColor={colors.palette.primary600}
@@ -123,9 +127,9 @@ export const AudioPlayer = observer(function AudioPlayer({ style, uri }: AudioPl
             onSlidingComplete={handleSliderValueChange}
             disabled={!sound}
           />
-          <Text style={styles.timeText}>{formatTime(duration)}</Text>
+          <Text style={$audioTimeText}>{formatTime(duration)}</Text>
         </View>
-        <View style={styles.controlsContainer}>
+        <View style={$audioControlsContainer}>
           <TouchableOpacity onPress={skipBackwards}>
             <Rewind color={colors.palette.primary500} width={30} height={30} />
           </TouchableOpacity>
@@ -145,41 +149,39 @@ export const AudioPlayer = observer(function AudioPlayer({ style, uri }: AudioPl
   )
 })
 
-const styles = StyleSheet.create({
-  colorContainer: {
-    alignItems: "center",
-    backgroundColor: colors.palette.neutral100,
-    borderRadius: 10,
-    justifyContent: "center",
-    marginHorizontal: 5,
-    padding: 10,
-  },
-  controlsContainer: {
-    alignItems: "center",
-    flexDirection: "row",
-    justifyContent: "center",
-    // marginTop: 5,
-  },
-  paddingContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 20,
-    padding: 5,
-  },
-  slider: {
-    color: colors.palette.neutral100,
-    height: 40,
-    width: "80%",
-  },
-  timeContainer: {
-    alignItems: "center",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "100%", // This will place the time labels on the sides
-    // marginBottom: 10, // Add some space above the controls
-  },
-  timeText: {
-    color: colors.palette.primary500,
-    fontFamily: typography.primary.normal,
-  },
-})
+const $audioColorContainer = {
+  alignItems: "center",
+  backgroundColor: colors.palette.neutral100,
+  borderRadius: 10,
+  justifyContent: "center",
+  marginHorizontal: 5,
+  padding: 10,
+} as ViewStyle
+const $audioControlsContainer = {
+  alignItems: "center",
+  flexDirection: "row",
+  justifyContent: "center",
+  // marginTop: 5,
+} as ViewStyle
+const $audioPaddingContainer = {
+  alignItems: "center",
+  justifyContent: "center",
+  paddingVertical: 20,
+  padding: 5,
+} as ViewStyle
+const $audioSlider = {
+  color: colors.palette.neutral100,
+  height: 40,
+  width: "80%",
+} as ViewStyle
+const $audioTimeContainer = {
+  alignItems: "center",
+  flexDirection: "row",
+  justifyContent: "space-between",
+  width: "100%", // This will place the time labels on the sides
+  // marginBottom: 10, // Add some space above the controls
+} as ViewStyle
+const $audioTimeText = {
+  color: colors.palette.primary500,
+  fontFamily: typography.primary.normal,
+}

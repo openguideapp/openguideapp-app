@@ -1,10 +1,11 @@
 /* eslint-disable react/jsx-key */
 import React from "react"
 import { ImageStyle, TextStyle, View, ViewStyle } from "react-native"
+
 import { Button, Icon, Text } from "../../../components"
 import { colors, typography } from "../../../theme"
-import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
+import { Demo } from "../DemoShowroomScreen"
 import { DemoUseCase } from "../DemoUseCase"
 
 const $iconStyle: ImageStyle = { width: 30, height: 30 }
@@ -25,7 +26,9 @@ const $customButtonRightAccessoryStyle: ViewStyle = {
   top: 0,
   right: 0,
 }
-const $customButtonPressedRightAccessoryStyle: ImageStyle = { tintColor: colors.palette.neutral100 }
+const $customButtonPressedRightAccessoryStyle: ImageStyle = {
+  tintColor: colors.palette.neutral100,
+}
 
 const $disabledOpacity: ViewStyle = { opacity: 0.5 }
 const $disabledButtonTextStyle: TextStyle = {
