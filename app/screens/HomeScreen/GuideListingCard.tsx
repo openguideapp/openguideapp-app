@@ -2,7 +2,6 @@ import * as React from "react"
 import { useEffect } from "react"
 import {
   AccessibilityProps,
-  ImageSourcePropType,
   Platform,
   TextStyle,
   useWindowDimensions,
@@ -12,29 +11,15 @@ import {
 // import Carousel, { ICarouselInstance } from "react-native-reanimated-carousel"
 import { Carousel } from "react-native-basic-carousel"
 import FastImage from "react-native-fast-image"
-import Animated, { useSharedValue, withSpring } from "react-native-reanimated"
+import { useSharedValue, withSpring } from "react-native-reanimated"
 import { useNavigation } from "@react-navigation/native"
-import {
-  AutoImage,
-  Button,
-  ButtonAccessoryProps,
-  Card,
-  EmptyState,
-  Icon,
-  ListView,
-  Screen,
-  Text,
-  Toggle,
-} from "app/components"
+import { Button, ButtonAccessoryProps, Card, Text } from "app/components"
 import { GuideListing, useStores } from "app/models"
 import { useComponentSize } from "app/utils/useComponentSize"
-import { set } from "date-fns"
 import { observer } from "mobx-react-lite"
 
-import { isRTL, translate } from "../../i18n"
+import { translate } from "../../i18n"
 import { colors, spacing } from "../../theme"
-
-import { AnimatedDotCarousel } from "./AnimatedDotCarousel"
 
 export const GuideListingCard = observer(function GuideListingCard({
   guideListing,
