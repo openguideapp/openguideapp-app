@@ -1,48 +1,10 @@
 import * as React from "react"
-import {
-  AccessibilityProps,
-  ActivityIndicator,
-  Dimensions,
-  Image,
-  ImageSourcePropType,
-  ImageStyle,
-  LayoutChangeEvent,
-  Modal,
-  Platform,
-  StyleSheet,
-  TextStyle,
-  useWindowDimensions,
-  View,
-  ViewStyle,
-} from "react-native"
-import FastImage from "react-native-fast-image"
-import Animated, {
-  Extrapolate,
-  interpolate,
-  SharedValue,
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-} from "react-native-reanimated"
+import { ActivityIndicator, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { ContentStyle } from "@shopify/flash-list"
-import {
-  AutoImage,
-  Button,
-  ButtonAccessoryProps,
-  Card,
-  EmptyState,
-  Icon,
-  ListView,
-  Screen,
-  Text,
-  Toggle,
-} from "app/components"
+import { EmptyState, ListView, Screen, Text, Toggle } from "app/components"
 // import { useNavigation } from "@react-navigation/native"
 import { GuideListing, useStores } from "app/models"
 import { AppStackScreenProps } from "app/navigators"
-import { openLinkInBrowser } from "app/utils/openLinkInBrowser"
-import { useComponentSize } from "app/utils/useComponentSize"
-import { set } from "date-fns"
 // import { isRTL } from "expo-localization"
 // import { translate } from "i18n-js"
 import { observer } from "mobx-react-lite"
@@ -215,11 +177,6 @@ const $favoriteButton: ViewStyle = {
   paddingBottom: 0,
   minHeight: 32,
   alignSelf: "flex-start",
-}
-
-const $unFavoriteButton: ViewStyle = {
-  borderColor: colors.palette.primary100,
-  backgroundColor: colors.palette.primary100,
 }
 
 const $emptyState: ViewStyle = {

@@ -4,30 +4,29 @@ import FastImage from "react-native-fast-image"
 import { MixedStyleDeclaration, TNode } from "react-native-render-html"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { AudioPlayer, VideoPlayer } from "app/components"
+import { VideoPlayer } from "app/components"
+import { GuideStylesDictionary } from "app/guide-builder/src/types/data-types"
 import { GuidePageStackNavigatorParamList } from "app/navigators"
-import { log } from "app/services/logging/logger"
 
+import { AudioPlayerRenderer } from "./AudioPlayerRenderer"
 import GuideList from "./GuideList"
 
 interface customRendererProps {
   tnode: TNode
-  componentStyles: Record<string, MixedStyleDeclaration>
+  componentStyles: GuideStylesDictionary
 }
 
-export const generateCustomRenderers = (componentStyles: Record<string, MixedStyleDeclaration>) => {
-  // if (componentStyles) {
-  const audioStyles: Record<string, MixedStyleDeclaration> = Object.keys(componentStyles)
-    .filter((key) => key.startsWith("audio"))
-    .reduce((acc, key) => {
-      acc[key] = componentStyles[key]
-      return acc
-    }, {} as Record<string, MixedStyleDeclaration>)
-  // }
-  console.log("audioStyles", audioStyles)
+export const generateCustomRenderers = (componentStyles: GuideStylesDictionary) => {
+  // const audioStyles: GuideStylesDictionary = Object.keys(componentStyles)
+  //   .filter((key) => key.startsWith("audio"))
+  //   .reduce((acc, key) => {
+  //     acc[key] = componentStyles[key]
+  //     return acc
+  //   }, {} as GuideStylesDictionary)
+
   return {
     audio: ({ tnode }: customRendererProps) => {
-      return <AudioPlayer uri={tnode.attributes.url} customStyles={componentStyles} />
+      return <AudioPlayerRenderer uri={tnode.attributes.url} styles={componentStyles} />
     },
     video: ({ tnode }: customRendererProps) => {
       console.log("tnode", tnode.getNativeStyles())

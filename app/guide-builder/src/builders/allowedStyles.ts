@@ -1,4 +1,2 @@
 
 
-
-const allowedStyles: ViewStyleProps = {}

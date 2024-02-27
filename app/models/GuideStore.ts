@@ -1,11 +1,12 @@
 import guideBuilder from "app/guide-builder/src/builders/guideBuilder"
-import { replaceStyleMappings } from "app/renderer/applyStyleMapping";
-import { assertAllMappingsApplied } from "app/renderer/assertAllMappingsApplied";
-import { mergeWithDefaultThemeStyles } from 'app/renderer/mergeWithDefaultThemeStyles';
+import { applyStylesMapping } from "app/models/helpers/applyStylesMapping";
+import { assertAllMappingsApplied } from "app/models/helpers/assertAllMappingsApplied";
+import { mergeWithDefaultComponentStyles } from "app/models/helpers/mergeWithDefaultComponentStyles";
+import { mergeWithDefaultTagsStyles } from "app/models/helpers/mergeWithDefaultTagsStyles";
+import { mergeWithDefaultThemeStyles } from 'app/models/helpers/mergeWithDefaultThemeStyles';
 import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
 
-import { GuideStyleDictionary } from './../guide-builder/src/types/data-types';
-import { applyStyleMapping } from './../renderer/applyStyleMapping';
+import { GuideStylesCatalog, GuideStylesDictionary } from './../guide-builder/src/types/data-types';
 import { withSetPropAction } from "./helpers/withSetPropAction"
 import { GuideImageModel } from "./GuideImage"
 import { GuideMapPathModel } from "./GuideMapPath"
@@ -22,12 +23,10 @@ export const GuideStoreModel = types
     images: types.array(GuideImageModel),
     mapPaths: types.array(GuideMapPathModel),
 
-
-    styles: types.array(GuideStyleModel),
-    tagStyles: types.frozen(GuideStyleDictionary),
-    themeStyles: types.frozen(GuideStyleDictionary),
-
-
+    // styles: types.array(GuideStyleModel),
+    tagsStyles: types.frozen<GuideStylesDictionary>(),
+    themeStyles: types.frozen<GuideStylesDictionary>(),
+    componentStyles: types.frozen<GuideStylesDictionary>(),
 
     loading: false,
   })
@@ -58,15 +57,7 @@ export const GuideStoreModel = types
         }
       }
     },
-    getTagsStyles() {
-      return self.styles.find((style) => style.path.endsWith("tags.styles.toml"))?.styles
-    },
-    getThemeStyles() {
-      return self.styles.find((style) => style.path.endsWith("theme.styles.toml"))?.styles
-    },
-    getComponentStyles() {
-      return self.styles.find((style) => style.path.endsWith("components.styles.toml"))?.styles
-    }
+
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions((store) => ({
     async fetchGuide(lng = "en") {
@@ -81,23 +72,40 @@ export const GuideStoreModel = types
       store.setProp("pages", guide.languages[lng].pages)
       store.setProp("images", guide.images)
       store.setProp("mapPaths", guide.mapPaths)
-      store.setProp("styles", guide.styles)
+      // store.setProp("styles", guide.styles)
 
-
+      // 
+      //    Theme Styles
+      //
       const mergedThemeStyles = mergeWithDefaultThemeStyles(
         guide.styles.find((style) => style.path.endsWith("theme.styles.toml"))?.styles || {}
       )
-      const resolvedThemeStyles = mergedThemeStyles.colorsPalette ? applyStyleMapping(mergedThemeStyles, mergedThemeStyles.colorsPalette) : mergedThemeStyles
-
-
-
-
-
-
-
+      const resolvedThemeStyles = applyStylesMapping(mergedThemeStyles, mergedThemeStyles)
       assertAllMappingsApplied(resolvedThemeStyles)
-
       store.setProp("themeStyles", resolvedThemeStyles)
+
+      // 
+      //    Tags Styles
+      //
+      const mergedTagsStyles = mergeWithDefaultTagsStyles(
+        guide.styles.find((style) => style.path.endsWith("tags.styles.toml"))?.styles || {}
+      )
+      const resolvedTagsStyles = applyStylesMapping(mergedTagsStyles, resolvedThemeStyles)
+      assertAllMappingsApplied(resolvedThemeStyles)
+      console.log("resolvedTagsStyles", resolvedTagsStyles)
+      store.setProp("tagsStyles", resolvedTagsStyles)
+
+      // 
+      //    Component Styles
+      //
+      const mergedComponentStyles = mergeWithDefaultComponentStyles(
+        guide.styles.find((style) => style.path.endsWith("Component.styles.toml"))?.styles || {}
+      )
+      const resolvedComponentStyles = applyStylesMapping(mergedComponentStyles, resolvedThemeStyles)
+      assertAllMappingsApplied(resolvedThemeStyles)
+      console.log("resolvedComponentStyles", resolvedComponentStyles)
+      store.setProp("componentStyles", resolvedComponentStyles)
+
       store.setProp("loading", false)
     },
   })) // eslint-disable-line @typescript-eslint/no-unused-vars

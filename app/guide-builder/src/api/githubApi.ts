@@ -3,7 +3,7 @@ import { Octokit } from '@octokit/rest'
 import axios, { AxiosResponse } from 'axios'
 import { XMLParser } from 'fast-xml-parser'
 
-import { LatLng } from '../types/data-types'
+import { GuideLatLng } from '../types/data-types'
 
 // NODEJS
 // const GITHUB_TOKEN = process.env.GITHUB_TOKEN 
@@ -20,7 +20,7 @@ export interface GithubEntry {
 
 export const githubApi = {
   parseUrl: (url: string): { owner: string; repo: string } => {
-    const regex = /github\.com\/([^\/]+)\/([^\/]+)/
+    const regex = /github\.com\/([^/]+)\/([^/]+)/
     const match = url.match(regex)
     if (match?.[1] && match?.[2]) {
       return {
@@ -113,7 +113,7 @@ export const githubApi = {
     }
   },
 
-  downloadPath: async (downloadUrl: string): Promise<LatLng[]> => {
+  downloadPath: async (downloadUrl: string): Promise<GuideLatLng[]> => {
     try {
       const response: AxiosResponse<string> = await axios.get(downloadUrl, {
         responseType: 'text', // Ensure Axios expects text data
@@ -127,7 +127,7 @@ export const githubApi = {
       const parser = new XMLParser(options)
       const gpx = parser.parse(response.data)
 
-      const coordinates: LatLng[] = gpx.gpx.trk.trkseg.trkpt.map(
+      const coordinates: GuideLatLng[] = gpx.gpx.trk.trkseg.trkpt.map(
         // biome-ignore lint/suspicious/noExplicitAny: <explanation>
         (point: any) => ({
           latitude: Number(point.lat),

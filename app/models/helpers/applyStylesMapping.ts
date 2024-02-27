@@ -1,11 +1,18 @@
-import { GuideStylesDictionary } from '../guide-builder/src/types/data-types';
+import { GuideStylesDictionary } from '../../guide-builder/src/types/data-types';
 
 type Replacements = {
     [key: string]: string | number;
 };
 
 
-export const applyStyleMapping = (obj: GuideStylesDictionary, replacements: Replacements): GuideStylesDictionary => {
+export const applyStylesMapping = (obj: GuideStylesDictionary, stylesMappings: GuideStylesDictionary): GuideStylesDictionary => {
+    const replacements = Object.values(stylesMappings).reduce<Replacements>((acc, current) => {
+        return {
+            ...acc,
+            ...current,
+        };
+    }, {}); // Initial value for the accumulator is an empty object
+
     // Deep copy the object to ensure immutability
     const newObj: GuideStylesDictionary = JSON.parse(JSON.stringify(obj));
     Object.keys(newObj).forEach((key) => {

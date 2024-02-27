@@ -1,11 +1,10 @@
 import React, { FC, useEffect, useState } from "react"
-import { View, ViewStyle } from "react-native"
-import FastImage from "react-native-fast-image"
-import MapView from "react-native-maps"
+import { useWindowDimensions, View, ViewStyle } from "react-native"
+import { RenderHTMLSource } from "react-native-render-html"
 import { AutoImage, Button, Renderer, Screen, Text } from "app/components"
 import { useStores } from "app/models"
 import { AppStackScreenProps } from "app/navigators"
-import { set } from "date-fns"
+import { GuideRenderEngine } from "app/renderer/GuideRenderEngine"
 import { observer } from "mobx-react-lite"
 
 export interface GuidePageScreenProps extends AppStackScreenProps<"GuidePage"> {}
@@ -33,11 +32,14 @@ export const GuidePageScreen: FC<GuidePageScreenProps> = observer(function Guide
   }, [userSettings.lng]) // Only re-run the effect if `userSettings.lng` changes
 
   const page = guideStore.getGuidePage(currentPath) // Use `currentPath` which reflects the latest language setting
+  const { width } = useWindowDimensions()
 
   return (
     <Screen style={$root} preset="scroll">
       <Text text="guidePage" />
-      <Renderer htmlSource={page.html} styles={guideStore.styles} />
+      <GuideRenderEngine>
+        <RenderHTMLSource contentWidth={width} source={{ html: page.html }} />
+      </GuideRenderEngine>
     </Screen>
   )
 })

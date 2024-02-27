@@ -1,26 +1,28 @@
 import React, { useEffect, useState } from "react"
-import { TouchableOpacity, View, ViewStyle } from "react-native"
-import { MixedStyleDeclaration } from "react-native-render-html"
+import { TouchableOpacity, View } from "react-native"
 import Slider from "@react-native-community/slider"
 import { Text } from "app/components/Text" // Assuming you have this component
-import { colors, typography } from "app/theme" // Assuming these are defined
+import { GuideStylesDictionary } from "app/guide-builder/src/types/data-types"
 import { Audio } from "expo-av"
 import { Forward, Pause, Play, Rewind } from "iconoir-react-native"
 import { observer } from "mobx-react-lite"
 
 export interface AudioPlayerProps {
   uri: string
-  customStyles?: Record<string, MixedStyleDeclaration>
+  styles: GuideStylesDictionary
 }
 
-export const AudioPlayer = observer(function AudioPlayer({ customStyles, uri }: AudioPlayerProps) {
+export const AudioPlayerRenderer = observer(function AudioPlayer({
+  styles,
+  uri,
+}: AudioPlayerProps) {
   const [sound, setSound] = useState<Audio.Sound | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [progress, setProgress] = useState<number>(0)
   const [duration, setDuration] = useState<number>(0)
   const [isLoading, setIsLoading] = useState(true)
 
-  console.log(customStyles)
+  console.log(styles)
 
   useEffect(() => {
     const init = async () => {
@@ -62,6 +64,7 @@ export const AudioPlayer = observer(function AudioPlayer({ customStyles, uri }: 
     const seconds = (millis % 60000) / 1000
     return minutes + ":" + (seconds < 10 ? "0" : "") + seconds.toFixed(0)
   }
+
   const playSound = async () => {
     console.log("Loading Sound")
     if (isLoading || !sound) {
@@ -109,76 +112,39 @@ export const AudioPlayer = observer(function AudioPlayer({ customStyles, uri }: 
   }
 
   return (
-    <View style={$audioPaddingContainer}>
-      <View style={$audioColorContainer}>
-        <View style={$audioTimeContainer}>
-          <Text style={$audioTimeText}>{formatTime(progress)}</Text>
+    <View style={styles.audioPaddingContainer}>
+      <View style={styles.audioColorContainer}>
+        <View style={styles.audioTimeContainer}>
+          <Text style={styles.audioTimeText}>{formatTime(progress)}</Text>
           <Slider
-            style={$audioSlider}
-            maximumTrackTintColor={colors.palette.primary100}
-            minimumTrackTintColor={colors.palette.primary400}
-            thumbTintColor={colors.palette.primary500}
+            style={styles.audioSlider}
+            maximumTrackTintColor={styles.colorPalette.primary500 as string}
+            minimumTrackTintColor={styles.colorPalette.primary400 as string}
+            thumbTintColor={styles.colorPalette.primary500 as string}
             minimumValue={0}
             maximumValue={1}
             value={duration > 0 ? progress / duration : 0}
             onSlidingComplete={handleSliderValueChange}
             disabled={!sound}
           />
-          <Text style={$audioTimeText}>{formatTime(duration)}</Text>
+          <Text style={styles.audioTimeText}>{formatTime(duration)}</Text>
         </View>
-        <View style={$audioControlsContainer}>
+        <View style={styles.audioControlsContainer}>
           <TouchableOpacity onPress={skipBackwards}>
-            <Rewind color={colors.palette.primary500} width={30} height={30} />
+            <Rewind color={styles.colorPalette.primary500 as string} width={30} height={30} />
           </TouchableOpacity>
           <TouchableOpacity onPress={isPlaying ? pauseSound : playSound}>
             {isPlaying ? (
-              <Pause color={colors.palette.primary500} width={30} height={30} />
+              <Pause color={styles.colorPalette.primary500 as string} width={30} height={30} />
             ) : (
-              <Play color={colors.palette.primary500} width={30} height={30} />
+              <Play color={styles.colorPalette.primary500 as string} width={30} height={30} />
             )}
           </TouchableOpacity>
           <TouchableOpacity onPress={skipForwards}>
-            <Forward color={colors.palette.primary500} width={30} height={30} />
+            <Forward color={styles.colorPalette.primary500 as string} width={30} height={30} />
           </TouchableOpacity>
         </View>
       </View>
     </View>
   )
 })
-
-const $audioColorContainer = {
-  alignItems: "center",
-  backgroundColor: colors.palette.neutral100,
-  borderRadius: 10,
-  justifyContent: "center",
-  marginHorizontal: 5,
-  padding: 10,
-} as ViewStyle
-const $audioControlsContainer = {
-  alignItems: "center",
-  flexDirection: "row",
-  justifyContent: "center",
-  // marginTop: 5,
-} as ViewStyle
-const $audioPaddingContainer = {
-  alignItems: "center",
-  justifyContent: "center",
-  paddingVertical: 20,
-  padding: 5,
-} as ViewStyle
-const $audioSlider = {
-  color: colors.palette.neutral100,
-  height: 40,
-  width: "80%",
-} as ViewStyle
-const $audioTimeContainer = {
-  alignItems: "center",
-  flexDirection: "row",
-  justifyContent: "space-between",
-  width: "100%", // This will place the time labels on the sides
-  // marginBottom: 10, // Add some space above the controls
-} as ViewStyle
-const $audioTimeText = {
-  color: colors.palette.primary500,
-  fontFamily: typography.primary.normal,
-}

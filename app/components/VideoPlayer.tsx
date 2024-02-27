@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react"
 import { StyleSheet, Text, TouchableOpacity, View, ViewStyle } from "react-native"
 import Slider from "@react-native-community/slider"
 import { colors, typography } from "app/theme" // Assuming these are defined elsewhere
-import { AVPlaybackStatus, Video } from "expo-av"
+import { AVPlaybackStatus, AVPlaybackStatusError, AVPlaybackStatusSuccess, Video } from "expo-av"
 import { Forward, Pause, Play, Rewind } from "iconoir-react-native"
 import { observer } from "mobx-react-lite"
 
@@ -13,15 +13,20 @@ export interface VideoPlayerProps {
 
 export const VideoPlayer = observer(function VideoPlayer({ style, uri }: VideoPlayerProps) {
   const videoRef = useRef<Video>(null)
-  const [status, setStatus] = useState<AVPlaybackStatus | null>(null)
+  const [status, setStatus] = useState<AVPlaybackStatusSuccess | AVPlaybackStatusError | null>(null)
   const [progress, setProgress] = useState<number>(0) // Progress of the video
   const [duration, setDuration] = useState<number>(0) // Duration of the video in milliseconds
 
+  function isAVPlaybackStatusSuccess(status: AVPlaybackStatus): status is AVPlaybackStatusSuccess {
+    return "isLoaded" in status && status.isLoaded && !("error" in status)
+  }
   // Update progress and duration based on status changes
   useEffect(() => {
-    if (status) {
+    if (status && isAVPlaybackStatusSuccess(status)) {
+      // Inside this block, TypeScript knows status is AVPlaybackStatusSuccess
       const newDuration = status.durationMillis ?? 0
       const newProgress = status.positionMillis ? status.positionMillis / newDuration : 0
+
       setDuration(newDuration)
       setProgress(newProgress)
     }
@@ -41,7 +46,7 @@ export const VideoPlayer = observer(function VideoPlayer({ style, uri }: VideoPl
 
   // Seek the video by a given amount (in milliseconds)
   const handleSeek = async (amount: number) => {
-    if (status && videoRef.current) {
+    if (status && isAVPlaybackStatusSuccess(status) && videoRef.current) {
       const newPosition = status.positionMillis + amount >= 0 ? status.positionMillis + amount : 0
       await videoRef.current.setPositionAsync(newPosition)
     }
@@ -55,7 +60,6 @@ export const VideoPlayer = observer(function VideoPlayer({ style, uri }: VideoPl
     }
   }
 
-  // Format time in mm:ss
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60)
     const seconds = Math.floor(time % 60)
@@ -116,8 +120,8 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   controlButton: {
-    padding: 10, // Touchable area
     marginHorizontal: 5, // Space between buttons
+    padding: 10, // Touchable area
     justifyContent: "center",
     alignItems: "center",
   },

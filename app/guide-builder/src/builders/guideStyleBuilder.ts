@@ -61,8 +61,6 @@ async function guideStyleBuilder(entries: GithubEntry[]): Promise<GuideStyle[]> 
                 styles: parsedToml,
             }
 
-            console.log("hallo", guideStyle)
-
             styles.push(guideStyle);
 
         } catch (error) {

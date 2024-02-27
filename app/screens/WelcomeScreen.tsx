@@ -1,6 +1,5 @@
 import React, { FC } from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
-import { CommonActions } from "@react-navigation/native"
 import { Button, Text } from "app/components"
 import { observer } from "mobx-react-lite"
 

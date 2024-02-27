@@ -1,7 +1,11 @@
 {
     "cSpell.words": [
         "Iconoir",
-        "tnode"
+        "Millis",
+        "symbolicate",
+        "tnode",
+        "trkpt",
+        "trkseg"
     ],
     "cmake.configureOnOpen": false
 }

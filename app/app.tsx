@@ -19,7 +19,6 @@ if (__DEV__) {
 import React from "react"
 import { ViewStyle } from "react-native"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
-import { RenderHTMLConfigProvider, TRenderEngineProvider } from "react-native-render-html"
 import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context"
 import { useFonts } from "expo-font"
 import * as Linking from "expo-linking"
@@ -33,7 +32,6 @@ import * as storage from "./utils/storage"
 import Config from "./config"
 import { useInitialRootStore } from "./models"
 import { AppNavigator, useNavigationPersistence } from "./navigators"
-import { customHTMLElementModels, customRenderers, renderersProps } from "./renderer"
 import { customFontsToLoad } from "./theme"
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
@@ -105,8 +103,6 @@ function App(props: AppProps) {
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <ErrorBoundary catchErrors={Config.catchErrors}>
         <GestureHandlerRootView style={$container}>
-          {/* <TRenderEngineProvider customHTMLElementModels={customHTMLElementModels} >
-            <RenderHTMLConfigProvider renderers={customRenderers} renderersProps={renderersProps} > */}
           <IconoirProvider
             iconProps={{
               color: "#181014",
@@ -121,8 +117,6 @@ function App(props: AppProps) {
               onStateChange={onNavigationStateChange}
             />
           </IconoirProvider>
-          {/* </RenderHTMLConfigProvider>
-          </TRenderEngineProvider> */}
         </GestureHandlerRootView>
       </ErrorBoundary>
     </SafeAreaProvider>

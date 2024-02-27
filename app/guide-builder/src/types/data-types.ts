@@ -38,6 +38,10 @@ export type GuideLng = {
     listing: GuideListing[],
 };
 
+export type GuideStylesCatalog = {
+    [key: string]: GuideStylesDictionary
+}
+
 export type GuideStylesDictionary = {
     [key: string]: { [key: string]: string | number }
 }

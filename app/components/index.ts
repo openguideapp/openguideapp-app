@@ -1,4 +1,3 @@
-export * from "../renderer/Renderer"
 export * from "./AudioPlayer"
 export * from "./AutoImage"
 export * from "./Button"
