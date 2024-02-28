@@ -4,12 +4,11 @@ import FastImage from "react-native-fast-image"
 import { MixedStyleDeclaration, TNode } from "react-native-render-html"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { VideoPlayer } from "app/components"
 import { GuideStylesDictionary } from "app/guide-builder/src/types/data-types"
 import { GuidePageStackNavigatorParamList } from "app/navigators"
 
 import { AudioPlayerRenderer } from "./AudioPlayerRenderer"
-import GuideList from "./GuideList"
+import GuideListRenderer from "./GuideListRenderer"
 import { VideoPlayerRenderer } from "./VideoPlayerRenderer"
 
 interface customRendererProps {
@@ -27,21 +26,15 @@ export const generateCustomRenderers = (componentStyles: GuideStylesDictionary) 
 
   return {
     audio: ({ tnode }: customRendererProps) => {
+      console.log("hallo")
       return <AudioPlayerRenderer uri={tnode.attributes.url} styles={componentStyles} />
     },
     video: ({ tnode }: customRendererProps) => {
       return <VideoPlayerRenderer uri={tnode.attributes.url} styles={componentStyles} />
     },
-    guideList: ({ tnode }: customRendererProps) => {
-      // Assuming tnode.children contains the data for the guides
-      // This is a simplified example and might need to be adjusted based on your data structure
-      const guides = tnode.children.map((guideNode) => ({
-        id: guideNode.attributes.id,
-        title: guideNode.attributes.title,
-        path: guideNode.attributes.path,
-      }))
-
-      return <GuideList guides={guides} />
+    list: ({ tnode }: customRendererProps) => {
+      console.log("hallo")
+      return <GuideListRenderer path={tnode.attributes.path} />
     },
     button: ({ tnode }: customRendererProps) => {
       const navigation = useNavigation<StackNavigationProp<GuidePageStackNavigatorParamList>>()

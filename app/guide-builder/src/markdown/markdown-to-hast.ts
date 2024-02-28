@@ -15,6 +15,7 @@ import { VFile } from "vfile";
 
 import remarkAudioPlayerPlugin from "./remark-directive-plugins/remarkAudioPlayerPlugin";
 import remarkButtonPlugin from "./remark-directive-plugins/remarkButtonPlugin";
+import remarkListPlugin from "./remark-directive-plugins/remarkListPlugin";
 import remarkVideoPlayerPlugin from "./remark-directive-plugins/remarkVideoPlayerPlugin";
 // import remarkYoutubePlugin from "./remark-directive-plugins/remarkYoutubePlugin";
 // import flattenImageParagraphs from "mdast-flatten-image-paragraphs";
@@ -30,7 +31,9 @@ export default function markdownToHast(md: string): VFile {
 		// remarkYoutubePlugin,
 		remarkButtonPlugin,
 		remarkAudioPlayerPlugin,
-		remarkVideoPlayerPlugin
+		remarkVideoPlayerPlugin,
+		remarkListPlugin
+
 	];
 	// const rehypePlugins = []
 

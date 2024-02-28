@@ -12,7 +12,7 @@ import { mergeWithDefaultBaseStyles } from "./helpers/mergeWithDefaultBaseStyles
 import { withSetPropAction } from "./helpers/withSetPropAction"
 import { GuideImageModel } from "./GuideImage"
 import { GuideMapPathModel } from "./GuideMapPath"
-import { GuidePageModel } from "./GuidePage"
+import { GuidePage, GuidePageModel } from "./GuidePage"
 import { GuideStyle, GuideStyleModel } from './GuideStyle';
 
 /**
@@ -44,6 +44,18 @@ export const GuideStoreModel = types
         return {
           path: "home.md",
           html: "<h1>Home Page Not Found!</h1>",
+          meta: []
+        }
+      }
+    },
+    getGuidePageDirectory(path: string): GuidePage[] {
+      const pages = self.pages.filter(page => page.path.startsWith(path.toString()))
+      if (pages) {
+        return pages
+      } else {
+        return {
+          path,
+          html: `<h1>${path} Not Found!</h1>`,
           meta: []
         }
       }

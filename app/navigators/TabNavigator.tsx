@@ -7,7 +7,7 @@ import { CompositeScreenProps } from "@react-navigation/native"
 import { Icon } from "app/components"
 import { HomeScreen, SettingsScreen } from "app/screens"
 import { colors, spacing, typography } from "app/theme"
-import { Community, Settings } from "iconoir-react-native"
+import { Community, HomeSimple, Settings } from "iconoir-react-native"
 
 import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
 
@@ -56,7 +56,7 @@ export const TabNavigator = () => {
         options={{
           // tabBarLabel: translate("demoNavigator.communityTab"),
           tabBarIcon: ({ focused }) => (
-            <Community height={30} width={30} color={focused ? colors.tint : colors.text} />
+            <HomeSimple height={30} width={30} color={focused ? colors.tint : colors.text} />
           ),
         }}
       />

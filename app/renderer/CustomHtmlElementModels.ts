@@ -13,4 +13,8 @@ export const customHTMLElementModels = {
     tagName: "video",
     contentModel: HTMLContentModel.block,
   }),
+  list: HTMLElementModel.fromCustomModel({
+    tagName: "list",
+    contentModel: HTMLContentModel.block,
+  }),
 }

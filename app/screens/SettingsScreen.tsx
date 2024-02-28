@@ -5,6 +5,7 @@ import { Button, Screen, Text } from "app/components"
 // import { useNavigation } from "@react-navigation/native"
 import { useStores } from "app/models"
 import { AppStackScreenProps } from "app/navigators"
+import { GuideListRendererExample } from "app/renderer/custom-renderer/GuideListRenderer"
 import { observer } from "mobx-react-lite"
 
 interface SettingsScreenProps extends AppStackScreenProps<"Settings"> {}
@@ -60,6 +61,7 @@ export const SettingsScreen: FC<SettingsScreenProps> = observer(function Setting
           guideStore.fetchGuide("en")
         }}
       />
+      {/* <GuideListRendererExample /> */}
     </Screen>
   )
 })
