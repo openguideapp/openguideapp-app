@@ -1,2 +1,2 @@
-export * from "./custom-renderer/CustomRenderers"
+export * from "./custom-renderer/generateCustomRenderers"
 export * from "./CustomHtmlElementModels"

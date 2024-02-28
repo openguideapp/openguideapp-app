@@ -27,6 +27,7 @@ import { IconoirProvider } from "iconoir-react-native"
 import "./i18n"
 import "./utils/ignoreWarnings"
 
+import { GuideRenderEngine } from "./renderer/GuideRenderEngine"
 import { ErrorBoundary } from "./screens/ErrorScreen/ErrorBoundary"
 import * as storage from "./utils/storage"
 import Config from "./config"
@@ -111,11 +112,13 @@ function App(props: AppProps) {
               height: "30",
             }}
           >
-            <AppNavigator
-              linking={linking}
-              initialState={initialNavigationState}
-              onStateChange={onNavigationStateChange}
-            />
+            <GuideRenderEngine>
+              <AppNavigator
+                linking={linking}
+                initialState={initialNavigationState}
+                onStateChange={onNavigationStateChange}
+              />
+            </GuideRenderEngine>
           </IconoirProvider>
         </GestureHandlerRootView>
       </ErrorBoundary>

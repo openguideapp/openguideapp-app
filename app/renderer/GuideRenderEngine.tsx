@@ -1,15 +1,15 @@
-import React, { ReactNode } from "react"
+import React, { ReactNode, useEffect, useMemo, useState } from "react"
 import {
   defaultSystemFonts,
   RenderHTMLConfigProvider,
   TRenderEngineProvider,
-  useAmbientTRenderEngine,
 } from "react-native-render-html"
-import { SpaceMono_400Regular, useFonts } from "@expo-google-fonts/space-mono"
-import { GuideStylesDictionary } from "app/guide-builder/src/types/data-types"
+// import { SpaceMono_400Regular, useFonts } from "@expo-google-fonts/space-mono"
+// import { GuideStylesDictionary } from "app/guide-builder/src/types/data-types"
 import { useStores } from "app/models"
+import { observer } from "mobx-react-lite"
 
-import { generateCustomRenderers } from "./custom-renderer/CustomRenderers"
+import { generateCustomRenderers } from "./custom-renderer/generateCustomRenderers"
 import { customHTMLElementModels } from "./CustomHtmlElementModels"
 
 interface GuideRenderEngineProps {
@@ -31,31 +31,32 @@ const renderersProps = {
 //   return <>{children}</>
 // }
 
-export const GuideRenderEngine: React.FC<GuideRenderEngineProps> = ({ children }) => {
-  console.log("       ====        inside web engine         ===         ")
-  const { guideStore } = useStores()
+export const GuideRenderEngine: React.FC<GuideRenderEngineProps> = observer(
+  function GuideRenderEngine({ children }: GuideRenderEngineProps) {
+    console.log("       ====        inside web engine         ===         ")
 
-  const customRenderers = generateCustomRenderers(guideStore.componentStyles)
+    const systemFonts = ["space-mono", ...defaultSystemFonts]
+    const { guideStore } = useStores()
 
-  const systemFonts = ["space-mono", ...defaultSystemFonts]
-
-  return (
-    // <FontLoader>
-    <TRenderEngineProvider
-      customHTMLElementModels={customHTMLElementModels}
-      tagsStyles={guideStore.tagsStyles}
-      systemFonts={systemFonts}
-    >
-      <RenderHTMLConfigProvider
-        renderers={customRenderers}
-        renderersProps={renderersProps}
-        enableExperimentalMarginCollapsing
-        enableExperimentalBRCollapsing
-        enableExperimentalGhostLinesPrevention
+    return (
+      // <FontLoader>
+      <TRenderEngineProvider
+        customHTMLElementModels={customHTMLElementModels}
+        tagsStyles={guideStore.tagsStyles}
+        baseStyle={guideStore.baseStyles.base}
+        systemFonts={systemFonts}
       >
-        {children}
-      </RenderHTMLConfigProvider>
-    </TRenderEngineProvider>
-    // </FontLoader>customFontsToLoad
-  )
-}
+        <RenderHTMLConfigProvider
+          renderers={guideStore.customRenderer}
+          renderersProps={renderersProps}
+          enableExperimentalMarginCollapsing
+          enableExperimentalBRCollapsing
+          enableExperimentalGhostLinesPrevention
+        >
+          {children}
+        </RenderHTMLConfigProvider>
+      </TRenderEngineProvider>
+      // </FontLoader>customFontsToLoad
+    )
+  },
+)

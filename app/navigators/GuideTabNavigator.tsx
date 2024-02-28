@@ -3,10 +3,13 @@ import { TextStyle, ViewStyle } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { NavigatorScreenParams } from "@react-navigation/native"
-import { Icon } from "app/components"
+import { Icon } from "app/components/Icon"
 import { translate } from "app/i18n"
 import { GuideSearchScreen, HomeScreen, SettingsScreen } from "app/screens"
 import { colors, spacing, typography } from "app/theme"
+import MagnifyingGlass from "assets/icons/magnifying_glass.svg"
+import OpenGuideLogoBW from "assets/icons/openguide_icon_bw.svg"
+import OpenGuideLogoColor from "assets/icons/openguide_icon_color.svg"
 import { DocMagnifyingGlass, FaceId, HomeSimple, Map, Settings } from "iconoir-react-native"
 
 import {
@@ -64,9 +67,14 @@ export const GuideTabNavigator = () => {
         component={GuidePageStackNavigator}
         options={{
           tabBarLabel: translate("tabNavigator.guidePage"),
-          tabBarIcon: ({ focused }) => (
-            <FaceId height={30} width={30} color={focused ? colors.tint : colors.text} />
-          ),
+          tabBarIcon: ({ focused }) =>
+            // <FaceId height={30} width={30} color={focused ? colors.tint : colors.text} />
+            focused ? (
+              // <OpenGuideLogoColor height={30} width={30} />
+              <Icon icon="openguide_color" size={30} />
+            ) : (
+              <OpenGuideLogoBW height={30} width={30} />
+            ),
         }}
       />
 
@@ -76,11 +84,7 @@ export const GuideTabNavigator = () => {
         options={{
           tabBarLabel: translate("tabNavigator.guideSearch"),
           tabBarIcon: ({ focused }) => (
-            <DocMagnifyingGlass
-              height={30}
-              width={30}
-              color={focused ? colors.tint : colors.text}
-            />
+            <MagnifyingGlass height={33} width={33} color={focused ? colors.tint : colors.text} />
           ),
         }}
       />

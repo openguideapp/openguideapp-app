@@ -1,5 +1,5 @@
 const palette = {
-  neutral100: "#FFFFFF",
+  neutral100: "#FFFFFF", // TODO: change naming to be more precise like neutralColor100 and textColor, backgroundColor, borderColor!
   neutral200: "#F4F2F1",
   neutral300: "#D7CEC9",
   neutral400: "#B6ACA6",

@@ -10,6 +10,7 @@ import { GuidePageStackNavigatorParamList } from "app/navigators"
 
 import { AudioPlayerRenderer } from "./AudioPlayerRenderer"
 import GuideList from "./GuideList"
+import { VideoPlayerRenderer } from "./VideoPlayerRenderer"
 
 interface customRendererProps {
   tnode: TNode
@@ -29,11 +30,7 @@ export const generateCustomRenderers = (componentStyles: GuideStylesDictionary) 
       return <AudioPlayerRenderer uri={tnode.attributes.url} styles={componentStyles} />
     },
     video: ({ tnode }: customRendererProps) => {
-      console.log("tnode", tnode.getNativeStyles())
-      console.log("tnode", tnode.getReactNativeProps())
-      console.log("tnode", tnode.getWebStyles())
-
-      return <VideoPlayer uri={tnode.attributes.url} />
+      return <VideoPlayerRenderer uri={tnode.attributes.url} styles={componentStyles} />
     },
     guideList: ({ tnode }: customRendererProps) => {
       // Assuming tnode.children contains the data for the guides
@@ -57,22 +54,22 @@ export const generateCustomRenderers = (componentStyles: GuideStylesDictionary) 
 
       return <Button title={buttonTitle} onPress={handlePress} />
     },
-    img: ({ tnode }: customRendererProps) => {
-      const imgSrc = tnode.attributes?.src
+    //   img: ({ tnode }: customRendererProps) => {
+    //     const imgSrc = tnode.attributes?.src
 
-      console.log(tnode.attributes)
+    //     console.log(tnode.attributes)
 
-      return (
-        <FastImage
-          style={{ width: 200, height: 200 }}
-          source={{
-            uri: "https://unsplash.it/400/400?image=1",
-            headers: { Authorization: "someAuthToken" },
-            priority: FastImage.priority.normal,
-          }}
-          resizeMode={FastImage.resizeMode.contain}
-        />
-      )
-    },
+    //     return (
+    //       <FastImage
+    //         style={{ width: 200, height: 200 }}
+    //         source={{
+    //           uri: imgSrc,
+    //           headers: { Authorization: "someAuthToken" },
+    //           priority: FastImage.priority.normal,
+    //         }}
+    //         resizeMode={FastImage.resizeMode.contain}
+    //       />
+    //     )
+    //   },
   }
 }

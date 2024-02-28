@@ -1,18 +1,20 @@
 import React, { useEffect, useRef, useState } from "react"
-import { StyleSheet, Text, TouchableOpacity, View, ViewStyle } from "react-native"
+import { Text, TouchableOpacity, View } from "react-native"
 import Slider from "@react-native-community/slider"
-import { colors, typography } from "app/theme" // Assuming these are defined elsewhere
+import { GuideStylesDictionary } from "app/guide-builder/src/types/data-types"
 import { AVPlaybackStatus, AVPlaybackStatusError, AVPlaybackStatusSuccess, Video } from "expo-av"
 import { Forward, Pause, Play, Rewind } from "iconoir-react-native"
 import { observer } from "mobx-react-lite"
 
 export interface VideoPlayerProps {
   uri: string
-  style?: ViewStyle
+  styles: GuideStylesDictionary
 }
 
-// TODO: observer???
-export const VideoPlayer = observer(function VideoPlayer({ style, uri }: VideoPlayerProps) {
+export const VideoPlayerRenderer = observer(function VideoPlayer({
+  styles,
+  uri,
+}: VideoPlayerProps) {
   const videoRef = useRef<Video>(null)
   const [status, setStatus] = useState<AVPlaybackStatusSuccess | AVPlaybackStatusError | null>(null)
   const [progress, setProgress] = useState<number>(0) // Progress of the video
@@ -68,108 +70,47 @@ export const VideoPlayer = observer(function VideoPlayer({ style, uri }: VideoPl
   }
 
   return (
-    <View style={[styles.paddingContainer, style]}>
-      <View style={[styles.colorContainer, style]}>
+    <View style={styles.videoColorContainer}>
+      <View style={styles.videoControlButton}>
         <Video
           ref={videoRef}
-          style={styles.video}
+          style={styles.videoPlayer}
           source={{ uri }}
           useNativeControls={true}
           onPlaybackStatusUpdate={setStatus as (status: AVPlaybackStatus) => void}
         />
-        <View style={styles.timeContainer}>
-          <Text style={styles.timeText}>{formatTime((status?.positionMillis ?? 0) / 1000)}</Text>
+        <View style={styles.videoTimeContainer}>
+          <Text style={styles.videoTimeText}>
+            {formatTime((status?.positionMillis ?? 0) / 1000)}
+          </Text>
           <Slider
-            style={styles.slider}
-            maximumTrackTintColor={colors.palette.primary100}
-            minimumTrackTintColor={colors.palette.primary400}
-            thumbTintColor={colors.palette.primary600}
+            style={styles.videoSlider}
+            maximumTrackTintColor={styles.videoSlider.maximumTrackTintColor as string}
+            minimumTrackTintColor={styles.videoSlider.minimumTrackTintColor as string}
+            thumbTintColor={styles.videoSlider.thumbTintColor as string}
             minimumValue={0}
             maximumValue={1}
             value={progress}
             onSlidingComplete={handleSliderValueChange}
           />
-          <Text style={styles.timeText}>{formatTime(duration / 1000)}</Text>
+          <Text style={styles.videoTimeText}>{formatTime(duration / 1000)}</Text>
         </View>
-        <View style={styles.controlsContainer}>
+        <View style={styles.videoControlsContainer}>
           <TouchableOpacity onPress={() => handleSeek(-15000)}>
-            <Rewind color={colors.palette.primary500} width={30} height={30} />
+            <Rewind color={styles.videoControls.iconColor as string} width={30} height={30} />
           </TouchableOpacity>
           <TouchableOpacity onPress={handlePlayPause}>
             {isPlaying() ? (
-              <Pause color={colors.palette.primary500} width={30} height={30} />
+              <Pause color={styles.videoControls.iconColor as string} width={30} height={30} />
             ) : (
-              <Play color={colors.palette.primary500} width={30} height={30} />
+              <Play color={styles.videoControls.iconColor as string} width={30} height={30} />
             )}
           </TouchableOpacity>
           <TouchableOpacity onPress={() => handleSeek(15000)}>
-            <Forward color={colors.palette.primary500} width={30} height={30} />
+            <Forward color={styles.videoControls.iconColor as string} width={30} height={30} />
           </TouchableOpacity>
         </View>
       </View>
     </View>
   )
-})
-
-const styles = StyleSheet.create({
-  colorContainer: {
-    alignItems: "center",
-    backgroundColor: colors.palette.neutral100,
-    borderRadius: 10,
-    justifyContent: "center",
-    marginHorizontal: 5,
-    padding: 10,
-  },
-  controlButton: {
-    marginHorizontal: 5, // Space between buttons
-    padding: 10, // Touchable area
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  controlText: {
-    color: colors.palette.primary500,
-    fontSize: 14, // Adjust based on your typography settings
-    fontFamily: typography.primary.bold, // Assuming bold is defined in your typography settings
-  },
-  controlsContainer: {
-    alignItems: "center",
-    flexDirection: "row",
-    justifyContent: "center",
-    // marginTop: 5,
-  },
-  controlsContainer: {
-    alignItems: "center",
-    flexDirection: "row",
-    justifyContent: "center",
-    marginTop: 20,
-  },
-  paddingContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 20,
-    padding: 5,
-  },
-  slider: {
-    flex: 1, // Take up all available space
-    marginHorizontal: 10, // Space between text and slider
-  },
-  timeContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: 10,
-    width: "100%", // Ensure the slider and time text span the full container width
-    paddingHorizontal: 20, // Padding to ensure content doesn't touch the edges
-  },
-  timeText: {
-    color: colors.palette.primary500,
-    fontFamily: typography.primary.normal,
-    fontSize: 12, // Adjust based on your typography settings
-  },
-  video: {
-    width: 320, // Fixed width, can be adjusted
-    height: 180, // Based on a 16:9 aspect ratio, can be adjusted
-    borderRadius: 10, // Optional: for rounded corners
-    overflow: "hidden", // Keeps the rounded corners effect
-  },
 })

@@ -4,9 +4,11 @@ import { assertAllMappingsApplied } from "app/models/helpers/assertAllMappingsAp
 import { mergeWithDefaultComponentStyles } from "app/models/helpers/mergeWithDefaultComponentStyles";
 import { mergeWithDefaultTagsStyles } from "app/models/helpers/mergeWithDefaultTagsStyles";
 import { mergeWithDefaultThemeStyles } from 'app/models/helpers/mergeWithDefaultThemeStyles';
+import { generateCustomRenderers } from "app/renderer";
 import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
 
 import { GuideStylesCatalog, GuideStylesDictionary } from './../guide-builder/src/types/data-types';
+import { mergeWithDefaultBaseStyles } from "./helpers/mergeWithDefaultBaseStyles";
 import { withSetPropAction } from "./helpers/withSetPropAction"
 import { GuideImageModel } from "./GuideImage"
 import { GuideMapPathModel } from "./GuideMapPath"
@@ -27,6 +29,8 @@ export const GuideStoreModel = types
     tagsStyles: types.frozen<GuideStylesDictionary>(),
     themeStyles: types.frozen<GuideStylesDictionary>(),
     componentStyles: types.frozen<GuideStylesDictionary>(),
+    customRenderer: types.frozen({}),
+    baseStyles: types.frozen<GuideStylesDictionary>(),
 
     loading: false,
   })
@@ -69,9 +73,9 @@ export const GuideStoreModel = types
       //   console.error(`Error fetching episodes: ${JSON.stringify(response)}`)
       // }
       const guide = await guideBuilder("https://github.com/openguideapp/openguideapp-test-guide/tree/main")
-      store.setProp("pages", guide.languages[lng].pages)
-      store.setProp("images", guide.images)
-      store.setProp("mapPaths", guide.mapPaths)
+      // store.setProp("pages", guide.languages[lng].pages)
+      // store.setProp("images", guide.images)
+      // store.setProp("mapPaths", guide.mapPaths)
       // store.setProp("styles", guide.styles)
 
       // 
@@ -82,7 +86,18 @@ export const GuideStoreModel = types
       )
       const resolvedThemeStyles = applyStylesMapping(mergedThemeStyles, mergedThemeStyles)
       assertAllMappingsApplied(resolvedThemeStyles)
-      store.setProp("themeStyles", resolvedThemeStyles)
+      // store.setProp("themeStyles", resolvedThemeStyles)
+
+      // 
+      //    Base Styles
+      //
+      const mergedBaseStyles = mergeWithDefaultBaseStyles(
+        guide.styles.find((style) => style.path.endsWith("base.styles.toml"))?.styles || {}
+      )
+      const resolvedBaseStyles = applyStylesMapping(mergedBaseStyles, resolvedThemeStyles)
+      assertAllMappingsApplied(resolvedThemeStyles)
+      console.log("resolvedBaseStyles", resolvedBaseStyles)
+      // store.setProp("baseStyles", resolvedBaseStyles)
 
       // 
       //    Tags Styles
@@ -93,7 +108,7 @@ export const GuideStoreModel = types
       const resolvedTagsStyles = applyStylesMapping(mergedTagsStyles, resolvedThemeStyles)
       assertAllMappingsApplied(resolvedThemeStyles)
       console.log("resolvedTagsStyles", resolvedTagsStyles)
-      store.setProp("tagsStyles", resolvedTagsStyles)
+      // store.setProp("tagsStyles", resolvedTagsStyles)
 
       // 
       //    Component Styles
@@ -105,6 +120,18 @@ export const GuideStoreModel = types
       assertAllMappingsApplied(resolvedThemeStyles)
       console.log("resolvedComponentStyles", resolvedComponentStyles)
       store.setProp("componentStyles", resolvedComponentStyles)
+
+      const customRenderer = generateCustomRenderers(resolvedComponentStyles)
+      // store.setProp("customRenderer", customRenderer)
+
+      store.setProp("pages", guide.languages[lng].pages)
+      store.setProp("images", guide.images)
+      store.setProp("mapPaths", guide.mapPaths)
+      store.setProp("themeStyles", resolvedThemeStyles)
+      store.setProp("baseStyles", resolvedBaseStyles)
+      store.setProp("tagsStyles", resolvedTagsStyles)
+      store.setProp("customRenderer", customRenderer)
+
 
       store.setProp("loading", false)
     },

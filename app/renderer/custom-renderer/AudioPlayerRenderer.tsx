@@ -22,8 +22,6 @@ export const AudioPlayerRenderer = observer(function AudioPlayer({
   const [duration, setDuration] = useState<number>(0)
   const [isLoading, setIsLoading] = useState(true)
 
-  console.log(styles)
-
   useEffect(() => {
     const init = async () => {
       // Prepare audio session
@@ -111,6 +109,8 @@ export const AudioPlayerRenderer = observer(function AudioPlayer({
     }
   }
 
+  // console.log(styles)
+
   return (
     <View style={styles.audioPaddingContainer}>
       <View style={styles.audioColorContainer}>
@@ -118,9 +118,9 @@ export const AudioPlayerRenderer = observer(function AudioPlayer({
           <Text style={styles.audioTimeText}>{formatTime(progress)}</Text>
           <Slider
             style={styles.audioSlider}
-            maximumTrackTintColor={styles.colorPalette.primary500 as string}
-            minimumTrackTintColor={styles.colorPalette.primary400 as string}
-            thumbTintColor={styles.colorPalette.primary500 as string}
+            maximumTrackTintColor={styles.audioSlider.maximumTrackTintColor as string}
+            minimumTrackTintColor={styles.audioSlider.minimumTrackTintColor as string}
+            thumbTintColor={styles.audioSlider.thumbTintColor as string}
             minimumValue={0}
             maximumValue={1}
             value={duration > 0 ? progress / duration : 0}
@@ -131,17 +131,17 @@ export const AudioPlayerRenderer = observer(function AudioPlayer({
         </View>
         <View style={styles.audioControlsContainer}>
           <TouchableOpacity onPress={skipBackwards}>
-            <Rewind color={styles.colorPalette.primary500 as string} width={30} height={30} />
+            <Rewind color={styles.audioControls.iconColor as string} width={30} height={30} />
           </TouchableOpacity>
           <TouchableOpacity onPress={isPlaying ? pauseSound : playSound}>
             {isPlaying ? (
-              <Pause color={styles.colorPalette.primary500 as string} width={30} height={30} />
+              <Pause color={styles.audioControls.iconColor as string} width={30} height={30} />
             ) : (
-              <Play color={styles.colorPalette.primary500 as string} width={30} height={30} />
+              <Play color={styles.audioControls.iconColor as string} width={30} height={30} />
             )}
           </TouchableOpacity>
           <TouchableOpacity onPress={skipForwards}>
-            <Forward color={styles.colorPalette.primary500 as string} width={30} height={30} />
+            <Forward color={styles.audioControls.iconColor as string} width={30} height={30} />
           </TouchableOpacity>
         </View>
       </View>

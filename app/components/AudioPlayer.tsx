@@ -13,6 +13,7 @@ export interface AudioPlayerProps {
   customStyles?: Record<string, MixedStyleDeclaration>
 }
 
+// TODO: oberserver???
 export const AudioPlayer = observer(function AudioPlayer({ customStyles, uri }: AudioPlayerProps) {
   const [sound, setSound] = useState<Audio.Sound | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)

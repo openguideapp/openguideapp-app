@@ -13,6 +13,7 @@ import {
   NavigatorScreenParams,
 } from "@react-navigation/native"
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
+import { GuideRenderEngine } from "app/renderer/GuideRenderEngine"
 import * as Screens from "app/screens"
 import { colors } from "app/theme"
 import { observer } from "mobx-react-lite"
@@ -20,8 +21,8 @@ import { observer } from "mobx-react-lite"
 import Config from "../config"
 import { useStores } from "../models"
 
-import { DemoNavigator,DemoTabParamList } from "./DemoNavigator"
-import { GuideTabNavigator,GuideTabNavigatorParamList } from "./GuideTabNavigator"
+import { DemoNavigator, DemoTabParamList } from "./DemoNavigator"
+import { GuideTabNavigator, GuideTabNavigatorParamList } from "./GuideTabNavigator"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { TabNavigator, TabNavigatorParamList } from "./TabNavigator"
 
@@ -54,7 +55,7 @@ export type AppStackParamList = {
   // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
 }
 
-// TODO: create dynamic tab navigator 
+// TODO: create dynamic tab navigator
 // https://github.com/react-navigation/react-navigation/issues/3945#issuecomment-404732749
 
 /**

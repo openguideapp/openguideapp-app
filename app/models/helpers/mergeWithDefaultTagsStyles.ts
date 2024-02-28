@@ -6,7 +6,7 @@ export const mergeWithDefaultTagsStyles = (customTagStyles: GuideStylesDictionar
 
 const defaultTagsStyles: GuideStylesDictionary = {
     a: {
-        color: "#1c1e21",
+        color: "$text",
         backgroundColor: "rgba(187, 239, 253, 0.3)",
     },
     h1: {
@@ -56,9 +56,9 @@ const defaultTagsStyles: GuideStylesDictionary = {
         marginRight: 0,
         paddingLeft: 20,
         paddingRight: 20,
-        backgroundColor: "#fff8d8",
+        backgroundColor: "$neutral400",
         borderLeftWidth: 10,
-        borderLeftColor: "#ffe564",
+        borderLeftColor: "$neutral500",
     },
     img: {
         alignSelf: "center",
