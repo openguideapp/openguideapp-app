@@ -17,6 +17,7 @@
     "bundle:visualize:dev": "npx react-native-bundle-visualizer --dev",
     "build:ios:sim": "eas build --profile development --platform ios",
     "build:ios:dev": "eas build --profile development:device --platform ios",
+    "build:ios:pre": "eas build --profile preview:device --platform ios",
     "build:ios:prod": "eas build --profile production --platform ios",
     "build:android:sim": "eas build --profile development --platform android --local",
     "build:android:dev": "eas build --profile development:device --platform android --local",
