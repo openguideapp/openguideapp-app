@@ -65,7 +65,6 @@
         {
           "ios": {
             "newArchEnabled": false,
-            "flipper": false,
             "infoPlist": {
               "UIBackgroundModes": [
                 "audio"

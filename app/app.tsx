@@ -73,7 +73,7 @@ function App(props: AppProps) {
     isRestored: isNavigationStateRestored,
   } = useNavigationPersistence(storage, NAVIGATION_PERSISTENCE_KEY)
 
-  const [areFontsLoaded] = useFonts(customFontsToLoad)
+  const [areFontsLoaded, fontLoadError] = useFonts(customFontsToLoad)
 
   const { rehydrated } = useInitialRootStore(() => {
     // This runs after the root store has been initialized and rehydrated.
@@ -91,7 +91,9 @@ function App(props: AppProps) {
   // In iOS: application:didFinishLaunchingWithOptions:
   // In Android: https://stackoverflow.com/a/45838109/204044
   // You can replace with your own loading component if you wish.marketplace
-  if (!rehydrated || !isNavigationStateRestored || !areFontsLoaded) return null
+  if (!rehydrated || !isNavigationStateRestored || (!areFontsLoaded && !fontLoadError)) {
+    return null
+  }
 
   const linking = {
     prefixes: [prefix],
