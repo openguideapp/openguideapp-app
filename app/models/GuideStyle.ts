@@ -1,4 +1,4 @@
-import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
+import { type Instance, type SnapshotIn, type SnapshotOut, types } from "mobx-state-tree"
 
 import { withSetPropAction } from "./helpers/withSetPropAction"
 

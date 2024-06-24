@@ -1,4 +1,5 @@
-import React, { ReactNode, useEffect, useMemo, useState } from "react"
+import type React from "react"
+import { type ReactNode, useEffect, useMemo, useState } from "react"
 import {
   defaultSystemFonts,
   RenderHTMLConfigProvider,
@@ -43,7 +44,7 @@ export const GuideRenderEngine: React.FC<GuideRenderEngineProps> = observer(
       <TRenderEngineProvider
         customHTMLElementModels={customHTMLElementModels}
         tagsStyles={guideStore.tagsStyles}
-        baseStyle={guideStore.baseStyles.base}
+        // baseStyle={guideStore.baseStyles.base} TODO:
         systemFonts={systemFonts}
       >
         <RenderHTMLConfigProvider

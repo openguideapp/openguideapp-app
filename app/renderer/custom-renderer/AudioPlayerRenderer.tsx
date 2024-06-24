@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import { TouchableOpacity, View } from "react-native"
 import Slider from "@react-native-community/slider"
 import { Text } from "app/components/Text" // Assuming you have this component
-import { GuideStylesDictionary } from "app/guide-builder/src/types/data-types"
+import type { GuideStylesDictionary } from "app/services/guide-builder/types/data-types"
 import { Audio } from "expo-av"
 import { Forward, Pause, Play, Rewind } from "iconoir-react-native"
 import { observer } from "mobx-react-lite"
@@ -60,7 +60,7 @@ export const AudioPlayerRenderer = observer(function AudioPlayer({
   const formatTime = (millis: number): string => {
     const minutes = Math.floor(millis / 60000)
     const seconds = (millis % 60000) / 1000
-    return minutes + ":" + (seconds < 10 ? "0" : "") + seconds.toFixed(0)
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds.toFixed(0)}`
   }
 
   const playSound = async () => {

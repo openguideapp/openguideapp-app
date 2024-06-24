@@ -1,8 +1,13 @@
 import React, { useEffect, useRef, useState } from "react"
 import { Text, TouchableOpacity, View } from "react-native"
 import Slider from "@react-native-community/slider"
-import { GuideStylesDictionary } from "app/guide-builder/src/types/data-types"
-import { AVPlaybackStatus, AVPlaybackStatusError, AVPlaybackStatusSuccess, Video } from "expo-av"
+import type { GuideStylesDictionary } from "app/services/guide-builder/types/data-types"
+import {
+  type AVPlaybackStatus,
+  type AVPlaybackStatusError,
+  type AVPlaybackStatusSuccess,
+  Video,
+} from "expo-av"
 import { Forward, Pause, Play, Rewind } from "iconoir-react-native"
 import { observer } from "mobx-react-lite"
 

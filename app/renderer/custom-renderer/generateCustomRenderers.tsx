@@ -4,7 +4,7 @@ import FastImage from "react-native-fast-image"
 import { MixedStyleDeclaration, TNode } from "react-native-render-html"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { GuideStylesDictionary } from "app/guide-builder/src/types/data-types"
+import { GuideStylesDictionary } from "app/services/guide-builder/src/types/data-types"
 import { GuidePageStackNavigatorParamList } from "app/navigators"
 
 import { AudioPlayerRenderer } from "./AudioPlayerRenderer"

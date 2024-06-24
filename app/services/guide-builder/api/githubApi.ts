@@ -1,9 +1,9 @@
 import { GITHUB_TOKEN } from "@env"
 import { Octokit } from '@octokit/rest'
-import axios, { AxiosResponse } from 'axios'
+import axios, { type AxiosResponse } from 'axios'
 import { XMLParser } from 'fast-xml-parser'
 
-import { GuideLatLng } from '../types/data-types'
+import type { GuideLatLng } from '../types/data-types'
 
 // NODEJS
 // const GITHUB_TOKEN = process.env.GITHUB_TOKEN 
@@ -40,7 +40,9 @@ export const githubApi = {
       const { owner, repo } = githubApi.parseUrl(url)
 
       // Fetch the contents of the specified path within the repository
-      const octokit = new Octokit({ auth: GITHUB_TOKEN })
+      // const octokit = new Octokit({ auth: GITHUB_TOKEN })
+      const octokit = new Octokit()
+
       const result = await octokit.repos.getContent({
         owner,
         repo,

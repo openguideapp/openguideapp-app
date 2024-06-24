@@ -1,5 +1,5 @@
 // import { describe, test } from "node:test";
-import { expect,test } from "bun:test";
+import { expect, test } from "bun:test";
 
 import markdownToHast from "./markdown-to-hast";
 // import fs from "node:fs/promises";

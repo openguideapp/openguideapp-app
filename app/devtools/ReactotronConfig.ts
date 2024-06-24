@@ -89,6 +89,7 @@ reactotron.onCustomCommand<[{ name: "route"; type: ArgType.String }]>({
     const { route } = args ?? {}
     if (route) {
       Reactotron.log(`Navigating to: ${route}`)
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       navigate(route as any) // this should be tied to the navigator, but since this is for debugging, we can navigate to illegal routes
     } else {
       Reactotron.log("Could not navigate. No route provided.")

@@ -1,4 +1,4 @@
-import { githubApi,GithubEntry } from "../api/githubApi";
+import { githubApi, GithubEntry } from "../api/githubApi";
 import { GuideMapPath } from '../types/data-types';
 
 async function guideMapPathBuilder(entries: GithubEntry[]): Promise<GuideMapPath[]> {

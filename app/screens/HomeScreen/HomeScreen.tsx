@@ -1,10 +1,16 @@
 import * as React from "react"
-import { ActivityIndicator, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
-import { ContentStyle } from "@shopify/flash-list"
+import {
+  ActivityIndicator,
+  type ImageStyle,
+  type TextStyle,
+  View,
+  type ViewStyle,
+} from "react-native"
+import type { ContentStyle } from "@shopify/flash-list"
 import { EmptyState, ListView, Screen, Text, Toggle } from "app/components"
 // import { useNavigation } from "@react-navigation/native"
-import { GuideListing, useStores } from "app/models"
-import { AppStackScreenProps } from "app/navigators"
+import { type GuideListing, useStores } from "app/models"
+import type { AppStackScreenProps } from "app/navigators"
 // import { isRTL } from "expo-localization"
 // import { translate } from "i18n-js"
 import { observer } from "mobx-react-lite"

@@ -1,18 +1,18 @@
-import guideBuilder from "app/guide-builder/src/builders/guideBuilder"
+import guideBuilder from "app/services/guide-builder/builders/guideBuilder"
 import { applyStylesMapping } from "app/models/helpers/applyStylesMapping";
 import { assertAllMappingsApplied } from "app/models/helpers/assertAllMappingsApplied";
 import { mergeWithDefaultComponentStyles } from "app/models/helpers/mergeWithDefaultComponentStyles";
 import { mergeWithDefaultTagsStyles } from "app/models/helpers/mergeWithDefaultTagsStyles";
 import { mergeWithDefaultThemeStyles } from 'app/models/helpers/mergeWithDefaultThemeStyles';
 import { generateCustomRenderers } from "app/renderer";
-import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
+import { type Instance, type SnapshotIn, type SnapshotOut, types } from "mobx-state-tree"
 
-import { GuideStylesCatalog, GuideStylesDictionary } from './../guide-builder/src/types/data-types';
+import { GuideStylesCatalog, type GuideStylesDictionary } from '../services/guide-builder/types/data-types';
 import { mergeWithDefaultBaseStyles } from "./helpers/mergeWithDefaultBaseStyles";
 import { withSetPropAction } from "./helpers/withSetPropAction"
 import { GuideImageModel } from "./GuideImage"
 import { GuideMapPathModel } from "./GuideMapPath"
-import { GuidePage, GuidePageModel } from "./GuidePage"
+import { type GuidePage, GuidePageModel } from "./GuidePage"
 import { GuideStyle, GuideStyleModel } from './GuideStyle';
 
 /**
@@ -40,24 +40,22 @@ export const GuideStoreModel = types
       const homePage = self.pages.find(page => page.path === "home.md")
       if (homePage) {
         return homePage
-      } else {
-        return {
-          path: "home.md",
-          html: "<h1>Home Page Not Found!</h1>",
-          meta: []
-        }
+      }
+      return {
+        path: "home.md",
+        html: "<h1>Home Page Not Found!</h1>",
+        meta: []
       }
     },
     getGuidePageDirectory(path: string): GuidePage[] {
       const pages = self.pages.filter(page => page.path.startsWith(path.toString()))
       if (pages) {
         return pages
-      } else {
-        return {
-          path,
-          html: `<h1>${path} Not Found!</h1>`,
-          meta: []
-        }
+      }
+      return {
+        path,
+        html: `<h1>${path} Not Found!</h1>`,
+        meta: []
       }
     },
     getGuidePage(path: string) {
@@ -65,12 +63,11 @@ export const GuideStoreModel = types
       // console.log("page", page)
       if (page) {
         return page
-      } else {
-        return {
-          path,
-          html: `<h1>${path} Not Found!</h1>`,
-          meta: []
-        }
+      }
+      return {
+        path,
+        html: `<h1>${path} Not Found!</h1>`,
+        meta: []
       }
     },
 

@@ -1,8 +1,13 @@
 import React, { useEffect, useRef, useState } from "react"
-import { StyleSheet, Text, TouchableOpacity, View, ViewStyle } from "react-native"
+import { StyleSheet, Text, TouchableOpacity, View, type ViewStyle } from "react-native"
 import Slider from "@react-native-community/slider"
 import { colors, typography } from "app/theme" // Assuming these are defined elsewhere
-import { AVPlaybackStatus, AVPlaybackStatusError, AVPlaybackStatusSuccess, Video } from "expo-av"
+import {
+  type AVPlaybackStatus,
+  type AVPlaybackStatusError,
+  type AVPlaybackStatusSuccess,
+  Video,
+} from "expo-av"
 import { Forward, Pause, Play, Rewind } from "iconoir-react-native"
 import { observer } from "mobx-react-lite"
 
@@ -22,6 +27,7 @@ export const VideoPlayer = observer(function VideoPlayer({ style, uri }: VideoPl
     return "isLoaded" in status && status.isLoaded && !("error" in status)
   }
   // Update progress and duration based on status changes
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (status && isAVPlaybackStatusSuccess(status)) {
       // Inside this block, TypeScript knows status is AVPlaybackStatusSuccess
@@ -83,7 +89,7 @@ export const VideoPlayer = observer(function VideoPlayer({ style, uri }: VideoPl
             style={styles.slider}
             maximumTrackTintColor={colors.palette.primary100}
             minimumTrackTintColor={colors.palette.primary400}
-            thumbTintColor={colors.palette.primary600}
+            thumbTintColor={colors.palette.primary500}
             minimumValue={0}
             maximumValue={1}
             value={progress}
@@ -130,12 +136,6 @@ const styles = StyleSheet.create({
     color: colors.palette.primary500,
     fontSize: 14, // Adjust based on your typography settings
     fontFamily: typography.primary.bold, // Assuming bold is defined in your typography settings
-  },
-  controlsContainer: {
-    alignItems: "center",
-    flexDirection: "row",
-    justifyContent: "center",
-    // marginTop: 5,
   },
   controlsContainer: {
     alignItems: "center",

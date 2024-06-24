@@ -1,4 +1,4 @@
-import { GuideStylesDictionary } from 'app/guide-builder/src/types/data-types';
+import type { GuideStylesDictionary } from 'app/services/guide-builder/types/data-types';
 import { colors } from 'app/theme';
 
 

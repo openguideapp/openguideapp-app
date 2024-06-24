@@ -4,7 +4,7 @@ import i18n from "i18n-js"
 
 import ar from "./ar"
 // if English isn't your default language, move Translations to the appropriate language file.
-import en, { Translations } from "./en"
+import en, { type Translations } from "./en"
 import fr from "./fr"
 import ko from "./ko"
 

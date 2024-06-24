@@ -3,11 +3,11 @@ import { Image, StyleSheet, Text, View } from "react-native"
 import FastImage from "react-native-fast-image"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import { useNavigation } from "@react-navigation/native"
-import { StackNavigationProp } from "@react-navigation/stack"
+import type { StackNavigationProp } from "@react-navigation/stack"
 import { AutoImage } from "app/components"
-import { GuideStylesDictionary } from "app/guide-builder/src/types/data-types"
+import type { GuideStylesDictionary } from "app/services/guide-builder/types/data-types"
 import { useStores } from "app/models"
-import { GuidePageStackNavigatorParamList } from "app/navigators"
+import type { GuidePageStackNavigatorParamList } from "app/navigators"
 
 export interface GuideListRendererProps {
   path: string

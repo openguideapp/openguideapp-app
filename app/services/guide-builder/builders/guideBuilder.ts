@@ -1,6 +1,5 @@
-// Assuming these imports are correctly pointing to your actual modules
-import { githubApi, GithubEntry } from "../api/githubApi";
-import { GuideContent } from "../types/data-types";
+import { githubApi, type GithubEntry } from "../api/githubApi";
+import type { GuideContent } from "../types/data-types";
 
 import { extractFileInfo } from "./extractFileInfo";
 // import guideImageBuilder from "./guideImageBuilder";
@@ -21,7 +20,7 @@ async function guideBuilder(githubUrl: string): Promise<GuideContent> {
     // Initialize groupedEntries to also consider fileType
     const groupedEntries: { [language: string]: { [fileType: string]: { [fileExtension: string]: GithubEntry[] } } } = {};
 
-    githubEntries.entries.forEach((entry: GithubEntry) => {
+    for (const entry of githubEntries.entries) {
         const { fileExtension, fileType, lng } = extractFileInfo(entry.path);
 
         // Ensure the language object exists
@@ -44,16 +43,16 @@ async function guideBuilder(githubUrl: string): Promise<GuideContent> {
 
         // Add the entry to the correct group
         groupedEntries[lng][groupKey][fileExtension].push(entry);
-    });
+    }
 
     const processingPromises: Promise<void>[] = [];
 
     // Iterate over languages
-    Object.entries(groupedEntries).forEach(([lng, fileTypes]) => {
+    for (const [lng, fileTypes] of Object.entries(groupedEntries)) {
         // Iterate over fileTypes (including 'default' for those without a specific fileType)
-        Object.entries(fileTypes).forEach(([type, fileExtensions]) => {
+        for (const [type, fileExtensions] of Object.entries(fileTypes)) {
             // Iterate over fileExtensions within each fileType
-            Object.entries(fileExtensions).forEach(([fileExtension, entries]) => {
+            for (const [fileExtension, entries] of Object.entries(fileExtensions)) {
                 switch (fileExtension) {
                     case "md":
                         processingPromises.push(
@@ -64,24 +63,19 @@ async function guideBuilder(githubUrl: string): Promise<GuideContent> {
                         );
                         break;
                     case "toml":
-
                         if (type === 'styles') {
                             processingPromises.push(
                                 guideStyleBuilder(entries).then(styles => {
                                     guide.styles.push(...styles);
                                 })
                             );
-                            break;
-
-                        }
-                        if (type === 'default') { // Only process listings if not a 'styles' type
+                        } else if (type === 'default') { // Only process listings if not a 'styles' type
                             processingPromises.push(
                                 guideListingBuilder(entries).then(listings => {
                                     guide.languages[lng] = guide.languages[lng] || { pages: [], listing: [] };
                                     guide.languages[lng].listing.push(...listings);
                                 })
                             );
-                            break;
                         }
                         break;
                     case "css":
@@ -112,10 +106,9 @@ async function guideBuilder(githubUrl: string): Promise<GuideContent> {
                         console.log(`Unhandled combination of fileType: ${type} and fileExtension: ${fileExtension}`);
                         break;
                 }
-
-            });
-        });
-    });
+            }
+        }
+    }
 
     // Handle all promises and finalize the guide object
     await Promise.all(processingPromises).then(() => {
@@ -127,4 +120,4 @@ async function guideBuilder(githubUrl: string): Promise<GuideContent> {
     return guide;
 }
 
-export default guideBuilder
+export default guideBuilder;

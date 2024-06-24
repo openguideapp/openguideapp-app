@@ -1,6 +1,6 @@
-import { githubApi, GithubEntry } from "../api/githubApi";
-import markdownToHast from "../markdown/markdown-to-hast";
-import { GuidePage } from "../types/data-types";
+import { githubApi, type GithubEntry } from "./api/githubApi";
+import markdownToHast from "./markdown/markdown-to-hast";
+import type { GuidePage } from "./types/data-types";
 
 // Implement the guidePageBuilder function
 async function guidePageBuilder(entries: GithubEntry[]): Promise<GuidePage[]> {

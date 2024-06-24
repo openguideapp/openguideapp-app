@@ -1,6 +1,4 @@
 {
-  "name": "Open Guide",
-  "displayName": "Open Guide",
   "expo": {
     "name": "Open Guide",
     "slug": "openguideapp",
@@ -22,9 +20,7 @@
       "fallbackToCacheTimeout": 0
     },
     "jsEngine": "hermes",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "android": {
       "icon": "./assets/images/app-icon-android-legacy.png",
       "package": "com.openguideapp",
@@ -66,9 +62,7 @@
           "ios": {
             "newArchEnabled": false,
             "infoPlist": {
-              "UIBackgroundModes": [
-                "audio"
-              ]
+              "UIBackgroundModes": ["audio"]
             }
           },
           "android": {
@@ -81,8 +75,5 @@
     "experiments": {
       "tsconfigPaths": true
     }
-  },
-  "ignite": {
-    "version": "9.4.2"
   }
 }

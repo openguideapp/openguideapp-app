@@ -1,11 +1,11 @@
-import React, { FC } from "react"
-import { ViewStyle } from "react-native"
+import React, { type FC } from "react"
+import type { ViewStyle } from "react-native"
 // import { Vimeo } from "react-native-vimeo-iframe"
 import { Button, Screen, Text } from "app/components"
 // import { useNavigation } from "@react-navigation/native"
 import { useStores } from "app/models"
-import { AppStackScreenProps } from "app/navigators"
-import { GuideListRendererExample } from "app/renderer/custom-renderer/GuideListRenderer"
+import type { AppStackScreenProps } from "app/navigators"
+// import { GuideListRendererExample } from "app/renderer/custom-renderer/GuideListRenderer"
 import { observer } from "mobx-react-lite"
 
 interface SettingsScreenProps extends AppStackScreenProps<"Settings"> {}
