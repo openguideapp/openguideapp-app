@@ -6,13 +6,13 @@ This project is funded by:
 
 <div align="center">
   <a href="https://www.bmbf.de/">
-    <img src="https://raw.githubusercontent.com/openguideapp/openguideapp-app/main/docs/logo_BMBF.svg" alt="Sponsor 1" width="150"/>
+    <img src="https://raw.githubusercontent.com/openguideapp/openguideapp-app/main/docs/logo_BMBF.svg" alt="Sponsor 1" width="200"/>
   </a>
   <a href="https://prototypefund.de/project/drip">
-    <img src="https://raw.githubusercontent.com/openguideapp/openguideapp-app/main/docs/logo_prototypefund.png" alt="Sponsor 3" width="150"/>
+    <img src="https://raw.githubusercontent.com/openguideapp/openguideapp-app/main/docs/logo_prototypefund.png" alt="Sponsor 3" width="75"/>
   </a>
   <a href="https://okfn.de/">
-    <img src="https://raw.githubusercontent.com/openguideapp/openguideapp-app/main/docs/logo_OKFN.svg" alt="Sponsor 2" width="150"/>
+    <img src="https://raw.githubusercontent.com/openguideapp/openguideapp-app/main/docs/logo_OKFN.svg" alt="Sponsor 2" width="200"/>
   </a>
 </div>
 
