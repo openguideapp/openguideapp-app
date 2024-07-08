@@ -2,7 +2,7 @@ import { githubApi, type GithubEntry } from "../api/githubApi";
 import type { GuideContent } from "../types/data-types";
 
 import { extractFileInfo } from "./extractFileInfo";
-// import guideImageBuilder from "./guideImageBuilder";
+import guideImageBuilder from "./guideImageBuilder";
 import guideListingBuilder from "./guideListingBuilder";
 import guideMapPathBuilder from './guideMapPathBuilder';
 import guidePageBuilder from "./guidePageBuilder";
@@ -88,12 +88,11 @@ async function guideBuilder(githubUrl: string): Promise<GuideContent> {
                         break;
                     case "jpg":
                     case "png":
-                        // Uncomment and implement guideImageBuilder if images need to be processed
-                        // processingPromises.push(
-                        //     guideImageBuilder(entries).then(images => {
-                        //         guide.images.push(...images);
-                        //     })
-                        // );
+                        processingPromises.push(
+                            guideImageBuilder(entries).then(images => {
+                                guide.images.push(...images);
+                            })
+                        );
                         break;
                     case "gpx":
                         processingPromises.push(
