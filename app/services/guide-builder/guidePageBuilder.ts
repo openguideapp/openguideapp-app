@@ -2,7 +2,6 @@ import { githubApi, type GithubEntry } from "./api/githubApi";
 import markdownToHast from "./markdown/markdown-to-hast";
 import type { GuidePage } from "./types/data-types";
 
-// Implement the guidePageBuilder function
 async function guidePageBuilder(entries: GithubEntry[]): Promise<GuidePage[]> {
     const pages: GuidePage[] = [];
 
@@ -20,7 +19,6 @@ async function guidePageBuilder(entries: GithubEntry[]): Promise<GuidePage[]> {
             pages.push(guidePage);
         } catch (error) {
             console.error(`Failed to process URL ${entry.uri}:`, error);
-            // Handle error, possibly by continuing to the next URL
         }
     }
 
